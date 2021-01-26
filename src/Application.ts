@@ -1,3 +1,4 @@
+import path from 'path'
 import Axios, { AxiosInstance } from 'axios'
 import express from 'express'
 import NotFound from './middleware/NotFound'
@@ -22,6 +23,8 @@ export default class Application {
    * middlewares and all of the routes.
    */
   async bootstrap(): Promise<void> {
+    this.server.use(express.static(path.join(__dirname, 'public')))
+
     this.server.use(express.json())
 
     this.server.get('/hello', HelloRoute)
