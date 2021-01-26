@@ -1,0 +1,7 @@
+# Node & NPM
+node_modules/
+logs/
+
+# TypeScript
+build/
+*.tsbuildinfo
