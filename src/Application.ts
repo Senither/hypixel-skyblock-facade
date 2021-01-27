@@ -1,20 +1,13 @@
 import path from 'path'
-import Axios, { AxiosInstance } from 'axios'
+import axios from 'axios'
 import express from 'express'
 import NotFound from './middleware/NotFound'
 import ErrorHandler from './middleware/ErrorHandler'
 import AuthIsPresent from './middleware/AuthIsPresent'
 import HelloRoute from './routes/Hello'
+import GetProfile from './routes/GetProfile'
 
 export default class Application {
-  /**
-   * The Axios HTTP client used to talk with the Hypixel API.
-   */
-  public http: AxiosInstance = Axios.create({
-    baseURL: 'https://api.hypixel.net/',
-    timeout: 10000,
-  })
-
   /**
    * The Express server instance.
    */
@@ -25,12 +18,16 @@ export default class Application {
    * middlewares and all of the routes.
    */
   async bootstrap(): Promise<void> {
+    axios.defaults.baseURL = 'https://api.hypixel.net/'
+    axios.defaults.timeout = 10000
+
     this.server.use(express.static(path.join(__dirname, 'public')))
 
     this.server.use(AuthIsPresent)
     this.server.use(express.json())
 
     this.server.get('/hello', HelloRoute)
+    this.server.get('/profile/:uuid', GetProfile)
 
     this.server.use(NotFound)
     this.server.use(ErrorHandler)
