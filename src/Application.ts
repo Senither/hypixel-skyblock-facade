@@ -2,6 +2,7 @@ import path from 'path'
 import Axios, { AxiosInstance } from 'axios'
 import express from 'express'
 import NotFound from './middleware/NotFound'
+import AuthIsPresent from './middleware/AuthIsPresent'
 import HelloRoute from './routes/Hello'
 
 export default class Application {
@@ -25,6 +26,7 @@ export default class Application {
   async bootstrap(): Promise<void> {
     this.server.use(express.static(path.join(__dirname, 'public')))
 
+    this.server.use(AuthIsPresent)
     this.server.use(express.json())
 
     this.server.get('/hello', HelloRoute)
