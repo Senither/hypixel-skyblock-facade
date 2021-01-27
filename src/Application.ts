@@ -2,6 +2,7 @@ import path from 'path'
 import Axios, { AxiosInstance } from 'axios'
 import express from 'express'
 import NotFound from './middleware/NotFound'
+import ErrorHandler from './middleware/ErrorHandler'
 import AuthIsPresent from './middleware/AuthIsPresent'
 import HelloRoute from './routes/Hello'
 
@@ -32,6 +33,7 @@ export default class Application {
     this.server.get('/hello', HelloRoute)
 
     this.server.use(NotFound)
+    this.server.use(ErrorHandler)
   }
 
   /**
