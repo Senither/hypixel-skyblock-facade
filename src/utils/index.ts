@@ -1,3 +1,5 @@
+export { asyncWrap as asyncWrap } from './AsyncWrap'
+
 export { isProduction as isProduction } from './Environment'
 
 export { isUuid as isUuid } from './Uuid'
