@@ -25,7 +25,7 @@ export default asyncWrap(async (request: Request, response: Response) => {
     result.push({
       id: profile.profile_id,
       name: profile.cute_name,
-      data: {
+      stats: {
         skills: SkillsGenerator.build(minifiedUuid, profile.members),
         slayers: SlayersGenerator.build(minifiedUuid, profile.members),
       },
