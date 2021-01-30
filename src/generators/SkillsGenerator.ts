@@ -1,11 +1,9 @@
 import Generator from '../contracts/Generator'
 import { GeneralSkillsExperience, RunecraftingSkillsExperience } from '../constants'
-import { SkyBlockProfile, SkyBlockProfilesResponse } from '../types/hypixel'
+import { SkyBlockProfile } from '../types/hypixel'
 
 class SkillsGenerator extends Generator {
-  build(uuid: string, profileData: SkyBlockProfilesResponse): object | null {
-    const profile: SkyBlockProfile = profileData[uuid]
-
+  build(profile: SkyBlockProfile): object | null {
     const mining = profile.experience_skill_mining || 0
     const foraging = profile.experience_skill_foraging || 0
     const enchanting = profile.experience_skill_enchanting || 0

@@ -1,11 +1,9 @@
 import Generator from '../contracts/Generator'
 import { SlayerExperience } from '../constants'
-import { SkyBlockProfile, SkyBlockProfilesResponse, Slayer, SlayerBosses } from '../types/hypixel'
+import { SkyBlockProfile, Slayer, SlayerBosses } from '../types/hypixel'
 
 class SlayersGenerator extends Generator {
-  build(uuid: string, profileData: SkyBlockProfilesResponse): object | null {
-    const profile: SkyBlockProfile = profileData[uuid]
-
+  build(profile: SkyBlockProfile): object | null {
     return {
       total_coins_spent: this.getTotalCoinsSpentOnSlayers(profile.slayer_bosses),
       total_experience: this.calculateTotalCombinedSlayerExperience(profile.slayer_bosses),

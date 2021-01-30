@@ -3,6 +3,7 @@ import HttpException from '../exceptions/HttpException'
 import SkillsGenerator from '../generators/SkillsGenerator'
 import SlayersGenerator from '../generators/SlayersGenerator'
 import { Request, Response } from '../types/express'
+import { SkyBlockProfile } from '../types/hypixel'
 import { asyncWrap, validateUuid } from '../utils'
 
 export default asyncWrap(async (request: Request, response: Response) => {
@@ -17,17 +18,19 @@ export default asyncWrap(async (request: Request, response: Response) => {
   const result = []
   const minifiedUuid = uuid.replace(/-/g, '')
 
-  for (let profile of profiles.data.profiles) {
-    if (!profile.members.hasOwnProperty(minifiedUuid)) {
+  for (let profileData of profiles.data.profiles) {
+    if (!profileData.members.hasOwnProperty(minifiedUuid)) {
       continue
     }
 
+    const profile: SkyBlockProfile = profileData.members[minifiedUuid]
+
     result.push({
-      id: profile.profile_id,
-      name: profile.cute_name,
+      id: profileData.profile_id,
+      name: profileData.cute_name,
       stats: {
-        skills: SkillsGenerator.build(minifiedUuid, profile.members),
-        slayers: SlayersGenerator.build(minifiedUuid, profile.members),
+        skills: SkillsGenerator.build(profile),
+        slayers: SlayersGenerator.build(profile),
       },
     })
   }
