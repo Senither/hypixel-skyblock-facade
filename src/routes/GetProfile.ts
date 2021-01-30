@@ -1,5 +1,6 @@
 import axios from 'axios'
 import HttpException from '../exceptions/HttpException'
+import SkillsGenerator from '../generators/SkillsGenerator'
 import { Request, Response } from '../types/express'
 import { asyncWrap, validateUuid } from '../utils'
 
@@ -12,5 +13,21 @@ export default asyncWrap(async (request: Request, response: Response) => {
     throw new HttpException(404, `Found no SkyBlock profiles for a user with a UUID of '${uuid}'`)
   }
 
-  return response.status(200).json(profiles.data)
+  const result = []
+  const minifiedUuid = uuid.replace(/-/g, '')
+
+  for (let profile of profiles.data.profiles) {
+    result.push({
+      id: profile.profile_id,
+      name: profile.cute_name,
+      data: {
+        skills: SkillsGenerator.build(minifiedUuid, profile.members),
+      },
+    })
+  }
+
+  return response.status(200).json({
+    status: 200,
+    data: result,
+  })
 })
