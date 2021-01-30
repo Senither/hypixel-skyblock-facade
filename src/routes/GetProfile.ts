@@ -28,6 +28,10 @@ export default asyncWrap(async (request: Request, response: Response) => {
     result.push({
       id: profileData.profile_id,
       name: profileData.cute_name,
+      last_save_at: {
+        time: profile.last_save,
+        date: new Date(profile.last_save),
+      },
       stats: {
         skills: SkillsGenerator.build(profile),
         slayers: SlayersGenerator.build(profile),
