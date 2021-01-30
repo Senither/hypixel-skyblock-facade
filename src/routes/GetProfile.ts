@@ -1,6 +1,7 @@
 import axios from 'axios'
 import HttpException from '../exceptions/HttpException'
 import SkillsGenerator from '../generators/SkillsGenerator'
+import SlayersGenerator from '../generators/SlayersGenerator'
 import { Request, Response } from '../types/express'
 import { asyncWrap, validateUuid } from '../utils'
 
@@ -26,6 +27,7 @@ export default asyncWrap(async (request: Request, response: Response) => {
       name: profile.cute_name,
       data: {
         skills: SkillsGenerator.build(minifiedUuid, profile.members),
+        slayers: SlayersGenerator.build(minifiedUuid, profile.members),
       },
     })
   }

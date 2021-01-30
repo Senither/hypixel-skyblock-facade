@@ -1,3 +1,5 @@
+import SlayerBosses from './SlayerBosses'
+
 export default interface SkyBlockProfile {
   last_save: number
   first_join: number
@@ -12,4 +14,6 @@ export default interface SkyBlockProfile {
   experience_skill_taming?: number
   experience_skill_carpentry?: number
   experience_skill_runecrafting?: number
+
+  slayer_bosses: SlayerBosses
 }
