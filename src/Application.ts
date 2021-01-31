@@ -5,7 +5,7 @@ import NotFound from './middleware/NotFound'
 import ErrorHandler from './middleware/ErrorHandler'
 import AuthIsPresent from './middleware/AuthIsPresent'
 import HelloRoute from './routes/Hello'
-import GetProfile from './routes/GetProfile'
+import GetProfiles from './routes/GetProfiles'
 
 export default class Application {
   /**
@@ -27,7 +27,7 @@ export default class Application {
     this.server.use(express.json())
 
     this.server.get('/hello', HelloRoute)
-    this.server.get('/profile/:uuid', GetProfile)
+    this.server.get('/profiles/:uuid', GetProfiles)
 
     this.server.use(NotFound)
     this.server.use(ErrorHandler)
