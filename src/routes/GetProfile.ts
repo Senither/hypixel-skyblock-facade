@@ -3,7 +3,7 @@ import HttpException from '../exceptions/HttpException'
 import SkillsGenerator from '../generators/SkillsGenerator'
 import SlayersGenerator from '../generators/SlayersGenerator'
 import { Request, Response } from '../types/express'
-import { SkyBlockProfile } from '../types/hypixel'
+import { SkyBlockProfile, SkyBlockProfilesResponse } from '../types/hypixel'
 import { asyncWrap, validateUuid } from '../utils'
 
 export default asyncWrap(async (request: Request, response: Response) => {
@@ -19,7 +19,7 @@ export default asyncWrap(async (request: Request, response: Response) => {
   const minifiedUuid = uuid.replace(/-/g, '')
 
   for (let profileData of profiles.data.profiles) {
-    if (!profileData.members.hasOwnProperty(minifiedUuid)) {
+    if (!isValidProfile(profileData.members, minifiedUuid)) {
       continue
     }
 
@@ -51,3 +51,14 @@ export default asyncWrap(async (request: Request, response: Response) => {
     data: result,
   })
 })
+
+/**
+ * Checks if the profile is valid by ensuring the player is a member of
+ * the profile, and that they have used the profile at least once.
+ *
+ * @param profileMembers The list of members for the current profile
+ * @param minifiedUuid The minified UUID for the player
+ */
+function isValidProfile(profileMembers: SkyBlockProfilesResponse, minifiedUuid: string) {
+  return profileMembers.hasOwnProperty(minifiedUuid) && profileMembers[minifiedUuid].last_save != undefined
+}
