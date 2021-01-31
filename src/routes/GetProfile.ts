@@ -1,5 +1,6 @@
 import axios from 'axios'
 import HttpException from '../exceptions/HttpException'
+import DungeonsGenerator from '../generators/DungeonsGenerator'
 import SkillsGenerator from '../generators/SkillsGenerator'
 import SlayersGenerator from '../generators/SlayersGenerator'
 import { Request, Response } from '../types/express'
@@ -35,6 +36,7 @@ export default asyncWrap(async (request: Request, response: Response) => {
       stats: {
         skills: SkillsGenerator.build(profile),
         slayers: SlayersGenerator.build(profile),
+        dungeons: DungeonsGenerator.build(profile),
       },
     })
   }

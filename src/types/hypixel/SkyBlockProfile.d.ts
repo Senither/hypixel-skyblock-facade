@@ -1,3 +1,4 @@
+import DungeonGroups from './DungeonGroups'
 import SlayerBosses from './SlayerBosses'
 
 export default interface SkyBlockProfile {
@@ -16,4 +17,6 @@ export default interface SkyBlockProfile {
   experience_skill_runecrafting?: number
 
   slayer_bosses: SlayerBosses
+
+  dungeons: DungeonGroups
 }
