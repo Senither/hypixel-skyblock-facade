@@ -1,4 +1,5 @@
 import Generator from '../contracts/Generator'
+import { humanizeTime } from '../utils'
 import { DungeonsExperience } from '../constants'
 import { SkyBlockProfile, DungeonGroups, Dungeon } from '../types/hypixel'
 import { DungeonStatsGroup } from '../types/hypixel/Dungeon'
@@ -128,12 +129,11 @@ class DungeonsGenerator extends Generator {
    */
   formatDungeonsTime(times: any): any {
     for (let key of Object.keys(times)) {
-      let value = times[key]
+      let seconds = times[key] / 1000
 
-      // TODO: Create a function to convert the time into a humanized string.
       times[key] = {
-        time: value,
-        seconds: value / 1000,
+        time: humanizeTime(seconds),
+        seconds,
       }
     }
 
