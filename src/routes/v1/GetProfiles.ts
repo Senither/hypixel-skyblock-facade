@@ -1,11 +1,11 @@
 import axios from 'axios'
-import HttpException from '../exceptions/HttpException'
-import DungeonsGenerator from '../generators/DungeonsGenerator'
-import SkillsGenerator from '../generators/SkillsGenerator'
-import SlayersGenerator from '../generators/SlayersGenerator'
-import { Request, Response } from '../types/express'
-import { SkyBlockProfile, SkyBlockProfilesResponse } from '../types/hypixel'
-import { asyncWrap, validateUuid } from '../utils'
+import HttpException from '../../exceptions/HttpException'
+import DungeonsGenerator from '../../generators/DungeonsGenerator'
+import SkillsGenerator from '../../generators/SkillsGenerator'
+import SlayersGenerator from '../../generators/SlayersGenerator'
+import { Request, Response } from '../../types/express'
+import { SkyBlockProfile, SkyBlockProfilesResponse } from '../../types/hypixel'
+import { asyncWrap, validateUuid } from '../../utils'
 
 export default asyncWrap(async (request: Request, response: Response) => {
   const uuid = validateUuid(request.params.uuid)
