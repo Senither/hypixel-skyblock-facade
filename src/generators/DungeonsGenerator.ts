@@ -115,6 +115,10 @@ class DungeonsGenerator extends Generator {
   private formatDungeonStatsGroup(group: DungeonStatsGroup): DungeonStatsGroup {
     let result: DungeonStatsGroup = {}
 
+    if (group == undefined) {
+      return result
+    }
+
     for (let key of Object.keys(group)) {
       if (key == '0') {
         result['entrance'] = group[key]
