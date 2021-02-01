@@ -1,4 +1,5 @@
-export { asyncWrap as asyncWrap } from './AsyncWrap'
+export { asyncWrap as asyncWrap } from './Request'
+export { preformGetRequest as preformGetRequest } from './Request'
 
 export { isProduction as isProduction } from './Environment'
 

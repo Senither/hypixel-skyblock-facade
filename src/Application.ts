@@ -20,6 +20,9 @@ export default class Application {
   async bootstrap(): Promise<void> {
     axios.defaults.baseURL = 'https://api.hypixel.net/'
     axios.defaults.timeout = 10000
+    axios.defaults.headers.common = {
+      'User-Agent': `Hypixel-Skyblock-Facade/${process.env.npm_package_version} (https://github.com/Senither/hypixel-skyblock-facade)`,
+    }
 
     this.server.use(express.static(path.join(__dirname, 'public')))
 
