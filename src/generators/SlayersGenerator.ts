@@ -1,18 +1,38 @@
 import Generator from '../contracts/Generator'
 import { SlayerExperience } from '../constants'
-import { SkyBlockProfile, Slayer, SlayerBosses } from '../types/hypixel'
+import { SkyBlockProfile, Slayer, SlayerBosses, SlayerWeightGroup } from '../types/hypixel'
 
 class SlayersGenerator extends Generator {
+  /**
+   * The slayer weight breakpoints, slayer weight will be
+   * given everytime a player reaches each breakpoint
+   * for each slayer type.
+   *
+   * @type object
+   */
+  private weights: SlayerWeightGroup = {
+    revenant: 2208,
+    tarantula: 2118,
+    sven: 1962,
+  }
+
   build(profile: SkyBlockProfile): object | null {
-    return {
+    const slayers: any = {
       total_coins_spent: this.getTotalCoinsSpentOnSlayers(profile.slayer_bosses),
       total_experience: this.calculateTotalCombinedSlayerExperience(profile.slayer_bosses),
+      weight: 0,
+      weight_overflow: 0,
       bosses: {
-        revenant: this.generateSlayerStatsResponse(profile.slayer_bosses.zombie),
-        tarantula: this.generateSlayerStatsResponse(profile.slayer_bosses.spider),
-        sven: this.generateSlayerStatsResponse(profile.slayer_bosses.wolf),
+        revenant: this.generateSlayerStatsResponse('revenant', profile.slayer_bosses.zombie),
+        tarantula: this.generateSlayerStatsResponse('tarantula', profile.slayer_bosses.spider),
+        sven: this.generateSlayerStatsResponse('sven', profile.slayer_bosses.wolf),
       },
     }
+
+    slayers.weight = this.sumWeights(slayers, 'weight')
+    slayers.weight_overflow = this.sumWeights(slayers, 'weight_overflow')
+
+    return slayers
   }
 
   /**
@@ -20,7 +40,7 @@ class SlayersGenerator extends Generator {
    *
    * @param slayers The slayer bosses object
    */
-  getTotalCoinsSpentOnSlayers(slayers: SlayerBosses): number {
+  private getTotalCoinsSpentOnSlayers(slayers: SlayerBosses): number {
     let totalCoins = 0
 
     for (let type of Object.keys(slayers)) {
@@ -40,7 +60,7 @@ class SlayersGenerator extends Generator {
    *
    * @param slayers The slayer bosses object
    */
-  calculateTotalCombinedSlayerExperience(slayers: SlayerBosses): number {
+  private calculateTotalCombinedSlayerExperience(slayers: SlayerBosses): number {
     let totalXp = 0
 
     for (let type of Object.keys(slayers)) {
@@ -55,10 +75,11 @@ class SlayersGenerator extends Generator {
    *
    * @param slayer The slayer object
    */
-  generateSlayerStatsResponse(slayer: Slayer): object {
+  private generateSlayerStatsResponse(type: string, slayer: Slayer): object {
     return {
       level: this.calculateSlayerLevel(slayer.xp),
       experience: slayer.xp,
+      ...this.calculateWeight(type, slayer.xp),
       kills: {
         tier_1: slayer.boss_kills_tier_0 || 0,
         tier_2: slayer.boss_kills_tier_1 || 0,
@@ -73,7 +94,7 @@ class SlayersGenerator extends Generator {
    *
    * @param experience The slayer experience
    */
-  calculateSlayerLevel(experience: number): number {
+  private calculateSlayerLevel(experience: number): number {
     for (let level = 0; level < SlayerExperience.length; level++) {
       let requirement = SlayerExperience[level]
 
@@ -84,6 +105,44 @@ class SlayersGenerator extends Generator {
       }
     }
     return 9
+  }
+
+  /**
+   * Calculates the weight for the given slayer type using the experience.
+   *
+   * @param type The slayer type that should be used in the calculations
+   * @param experience The total amount of experience in the current slayer type
+   */
+  private calculateWeight(type: string, experience: number) {
+    const divider = this.weights[type]
+
+    if (experience <= 1000000) {
+      return {
+        weight: experience == 0 ? 0 : experience / divider,
+        weight_overflow: 0,
+      }
+    }
+
+    let base = 1000000 / divider
+    let remaining = experience - 1000000
+    let overflow = Math.pow(remaining / (divider * 1.5), 0.942)
+
+    return {
+      weight: base,
+      weight_overflow: overflow,
+    }
+  }
+
+  /**
+   * Sums up the given weight type using the given slayer object.
+   *
+   * @param slayers The slayers object that contains already calculated weights
+   * @param type The type of weight that should be summed up
+   */
+  private sumWeights(slayers: any, type: string): number {
+    return Object.keys(this.weights)
+      .map(v => slayers.bosses[v][type])
+      .reduce((accumulator, current) => accumulator + current)
   }
 }
 
