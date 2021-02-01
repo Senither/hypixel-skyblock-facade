@@ -76,10 +76,12 @@ class SlayersGenerator extends Generator {
    * @param slayer The slayer object
    */
   private generateSlayerStatsResponse(type: string, slayer: Slayer): object {
+    const experience = slayer.xp || 0
+
     return {
-      level: this.calculateSlayerLevel(slayer.xp),
-      experience: slayer.xp,
-      ...this.calculateWeight(type, slayer.xp),
+      level: this.calculateSlayerLevel(experience),
+      experience: experience,
+      ...this.calculateWeight(type, experience),
       kills: {
         tier_1: slayer.boss_kills_tier_0 || 0,
         tier_2: slayer.boss_kills_tier_1 || 0,

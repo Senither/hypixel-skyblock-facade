@@ -1,5 +1,5 @@
 export default interface Slayer {
-  xp: number
+  xp?: number
   boss_kills_tier_0?: number
   boss_kills_tier_1?: number
   boss_kills_tier_2?: number
