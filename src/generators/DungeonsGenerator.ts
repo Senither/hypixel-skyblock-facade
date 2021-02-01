@@ -1,11 +1,35 @@
 import Generator from '../contracts/Generator'
 import { humanizeTime } from '../utils'
 import { DungeonsExperience } from '../constants'
-import { SkyBlockProfile, DungeonGroups, Dungeon } from '../types/hypixel'
+import { SkyBlockProfile, DungeonGroups, Dungeon, DungeonWeightGroup } from '../types/hypixel'
 import { DungeonStatsGroup } from '../types/hypixel/Dungeon'
 import { PlayerClassExperience } from '../types/hypixel/PlayerClass'
 
 class DungeonsGenerator extends Generator {
+  /**
+   * The experience required to reach level 50 in any dungeon class.
+   *
+   * @type Number
+   */
+  private level50Experience = 569809640
+
+  /**
+   * The dungeon weight breakpoints, these values are used to
+   * calculate a dungeon class weight by limiting points at
+   * level 50 to the breakpoints, all XP past level 50
+   * will be given at 1/4 the rate.
+   *
+   * @type Object
+   */
+  private weights: DungeonWeightGroup = {
+    catacombs: 6500,
+    healer: 200,
+    mage: 200,
+    berserker: 200,
+    archer: 200,
+    tank: 200,
+  }
+
   build(profile: SkyBlockProfile): object | null {
     const dungeonGroups: DungeonGroups = profile.dungeons
 
@@ -13,19 +37,26 @@ class DungeonsGenerator extends Generator {
       return null
     }
 
-    return {
+    const dungeons: any = {
       selected_class: dungeonGroups.selected_dungeon_class,
+      weight: 0,
+      weight_overflow: 0,
       classes: {
-        healer: this.generateClassProperties(dungeonGroups.player_classes.healer),
-        mage: this.generateClassProperties(dungeonGroups.player_classes.mage),
-        berserker: this.generateClassProperties(dungeonGroups.player_classes.berserk),
-        archer: this.generateClassProperties(dungeonGroups.player_classes.archer),
-        tank: this.generateClassProperties(dungeonGroups.player_classes.tank),
+        healer: this.generateClassProperties('healer', dungeonGroups.player_classes.healer),
+        mage: this.generateClassProperties('mage', dungeonGroups.player_classes.mage),
+        berserker: this.generateClassProperties('berserker', dungeonGroups.player_classes.berserk),
+        archer: this.generateClassProperties('archer', dungeonGroups.player_classes.archer),
+        tank: this.generateClassProperties('tank', dungeonGroups.player_classes.tank),
       },
       types: {
-        catacombs: this.buildDungeonTypeProperties(dungeonGroups.dungeon_types.catacombs),
+        catacombs: this.buildDungeonTypeProperties('catacombs', dungeonGroups.dungeon_types.catacombs),
       },
     }
+
+    dungeons.weight = this.sumWeights(dungeons, 'weight') + dungeons.types.catacombs.weight
+    dungeons.weight_overflow = this.sumWeights(dungeons, 'weight_overflow') + dungeons.types.catacombs.weight_overflow
+
+    return dungeons
   }
 
   /**
@@ -35,7 +66,7 @@ class DungeonsGenerator extends Generator {
    *
    * @param dungeons The dungeon groups that should be checked
    */
-  hasDungeonData(dungeons: DungeonGroups): boolean {
+  private hasDungeonData(dungeons: DungeonGroups): boolean {
     return (
       dungeons != undefined &&
       dungeons.player_classes != undefined &&
@@ -49,12 +80,16 @@ class DungeonsGenerator extends Generator {
   /**
    * Builds all the dungeon properties for the given dungeon instance.
    *
-   * @param dungeon The dungeon type that the properties should be built for
+   * @param type The dungeon type the properties should be built with
+   * @param dungeon The dungeon that the properties should be built for
    */
-  buildDungeonTypeProperties(dungeon: Dungeon) {
+  private buildDungeonTypeProperties(type: string, dungeon: Dungeon) {
+    const level = this.calculateLevel(dungeon.experience)
+
     const dungeonResult = {
-      level: this.calculateLevel(dungeon.experience),
+      level: level,
       experience: dungeon.experience,
+      ...this.calculateWeight(type, level, dungeon.experience),
       highest_tier_completed: dungeon.highest_tier_completed,
       times_played: this.formatDungeonStatsGroup(dungeon.times_played),
       tier_completions: this.formatDungeonStatsGroup(dungeon.tier_completions),
@@ -77,7 +112,7 @@ class DungeonsGenerator extends Generator {
    *
    * @param group The dungeon stats group that should be formatted
    */
-  formatDungeonStatsGroup(group: DungeonStatsGroup): DungeonStatsGroup {
+  private formatDungeonStatsGroup(group: DungeonStatsGroup): DungeonStatsGroup {
     let result: DungeonStatsGroup = {}
 
     for (let key of Object.keys(group)) {
@@ -97,7 +132,7 @@ class DungeonsGenerator extends Generator {
    *
    * @param scores The dungeon scores that should be formatted
    */
-  formatDungeonScores(scores: any): any {
+  private formatDungeonScores(scores: any): any {
     for (let key of Object.keys(scores)) {
       let value = scores[key]
       let score = 'C'
@@ -127,7 +162,7 @@ class DungeonsGenerator extends Generator {
    *
    * @param times The dungeon times that should be formatted
    */
-  formatDungeonsTime(times: any): any {
+  private formatDungeonsTime(times: any): any {
     for (let key of Object.keys(times)) {
       let seconds = times[key] / 1000
 
@@ -141,16 +176,19 @@ class DungeonsGenerator extends Generator {
   }
 
   /**
-   * Generates the class level and experience for the given player class.
+   * Generates the class level, experience, and weight for the given player class type.
    *
+   * @param type The dungeon class type
    * @param playerClass The player class that should be generated
    */
-  generateClassProperties(playerClass: PlayerClassExperience) {
+  private generateClassProperties(type: string, playerClass: PlayerClassExperience) {
     const experience = playerClass.experience || 0
+    const level = this.calculateLevel(experience)
 
     return {
-      level: this.calculateLevel(experience),
+      level: level,
       experience: experience,
+      ...this.calculateWeight(type, level, experience),
     }
   }
 
@@ -159,7 +197,7 @@ class DungeonsGenerator extends Generator {
    *
    * @param experience The experience that should be calculated to a level
    */
-  calculateLevel(experience: number) {
+  private calculateLevel(experience: number) {
     let level = 0
 
     for (let toRemove of DungeonsExperience) {
@@ -171,6 +209,52 @@ class DungeonsGenerator extends Generator {
     }
 
     return Math.min(level, 50)
+  }
+
+  /**
+   * Calculates the weight for the given slayer type using the experience.
+   *
+   * @param type The slayer type that should be used in the calculations
+   * @param experience The total amount of experience in the current slayer type
+   */
+  private calculateWeight(type: string, level: number, experience: number) {
+    let maxPoints = this.weights[type]
+
+    // Calculates the base weight using the players level
+    let base = (Math.pow(level * 10, 3) * (maxPoints / 100000)) / 1250
+
+    // If the dungeon XP is below the requirements for a level 50 dungeon we'll
+    // just return our weight right away.
+    if (experience <= this.level50Experience) {
+      return {
+        weight: base,
+        weight_overflow: 0,
+      }
+    }
+
+    // Calculates the XP above the level 50 requirement, and the splitter
+    // value, weight given past level 50 is given at 1/4 the rate.
+    let remaining = experience - this.level50Experience
+    let splitter = (4 * this.level50Experience) / maxPoints
+
+    return {
+      weight: base,
+      weight_overflow: Math.pow(remaining / splitter, 0.968),
+    }
+  }
+
+  /**
+   * Sums up the given weight type using the given dungeons object.
+   *
+   * @param dungeons The dungeons object that contains already calculated weights
+   * @param type The type of weight that should be summed up
+   */
+  private sumWeights(dungeons: any, type: string): number {
+    return Object.keys(this.weights)
+      .map(v => {
+        return dungeons.classes.hasOwnProperty(v) ? dungeons.classes[v][type] : 0
+      })
+      .reduce((accumulator, current) => accumulator + current)
   }
 }
 
