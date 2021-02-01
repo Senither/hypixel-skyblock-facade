@@ -32,6 +32,8 @@ export default asyncWrap(async (request: Request, response: Response) => {
         time: profile.last_save,
         date: new Date(profile.last_save),
       },
+      weight: 0,
+      weight_overflow: 0,
       skills: SkillsGenerator.build(profile),
       slayers: SlayersGenerator.build(profile),
       dungeons: DungeonsGenerator.build(profile),
@@ -43,6 +45,11 @@ export default asyncWrap(async (request: Request, response: Response) => {
   // profile in the API, but they haven't accepted the invitation yet.
   if (result.length == 0) {
     throw new HttpException(404, `Found no SkyBlock profiles for a user with a UUID of '${uuid}'`)
+  }
+
+  for (let stats of result) {
+    stats.weight = sumWeight(stats, 'weight')
+    stats.weight_overflow = sumWeight(stats, 'weight_overflow')
   }
 
   return response.status(200).json({
@@ -60,4 +67,28 @@ export default asyncWrap(async (request: Request, response: Response) => {
  */
 function isValidProfile(profileMembers: SkyBlockProfilesResponse, minifiedUuid: string) {
   return profileMembers.hasOwnProperty(minifiedUuid) && profileMembers[minifiedUuid].last_save != undefined
+}
+
+/**
+ * Sums up the given stats with the given weight type.
+ *
+ * @param stats The stats that the weight should be calculated with
+ * @param type The weight type that should be summed up
+ */
+function sumWeight(stats: any, type: string) {
+  let weight = 0
+
+  if (stats.skills != null) {
+    weight += stats.skills[type]
+  }
+
+  if (stats.slayers != null) {
+    weight += stats.slayers[type]
+  }
+
+  if (stats.dungeons != null) {
+    weight += stats.dungeons[type]
+  }
+
+  return weight
 }
