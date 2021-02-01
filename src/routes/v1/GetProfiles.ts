@@ -32,11 +32,9 @@ export default asyncWrap(async (request: Request, response: Response) => {
         time: profile.last_save,
         date: new Date(profile.last_save),
       },
-      stats: {
-        skills: SkillsGenerator.build(profile),
-        slayers: SlayersGenerator.build(profile),
-        dungeons: DungeonsGenerator.build(profile),
-      },
+      skills: SkillsGenerator.build(profile),
+      slayers: SlayersGenerator.build(profile),
+      dungeons: DungeonsGenerator.build(profile),
     })
   }
 
