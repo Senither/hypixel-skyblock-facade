@@ -1,6 +1,7 @@
 import Generator from '../contracts/Generator'
 import { GeneralSkillsExperience, RunecraftingSkillsExperience } from '../constants'
 import { SkillWeightEntity, SkillWeightGroup, SkyBlockProfile } from '../types/hypixel'
+import { SkyBlockSkillGroupResponse } from '../types/hypixel/SkyBlockProfileStats'
 
 class SkillsGenerator extends Generator {
   /**
@@ -89,7 +90,7 @@ class SkillsGenerator extends Generator {
    */
   private weightSkills: string[] = ['mining', 'foraging', 'enchanting', 'farming', 'combat', 'fishing', 'alchemy', 'taming']
 
-  build(profile: SkyBlockProfile): object | null {
+  build(profile: SkyBlockProfile): SkyBlockSkillGroupResponse | null {
     const mining = profile.experience_skill_mining || 0
     const foraging = profile.experience_skill_foraging || 0
     const enchanting = profile.experience_skill_enchanting || 0

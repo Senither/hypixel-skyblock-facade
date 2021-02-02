@@ -1,5 +1,5 @@
 import SkyBlockProfile from './SkyBlockProfile'
 
-export default interface SkyBlockProfilesResponse {
+export default interface SkyBlockProfileMembersResponse {
   [uuid: string]: SkyBlockProfile
 }

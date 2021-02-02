@@ -3,7 +3,8 @@ import { humanizeTime } from '../utils'
 import { DungeonsExperience } from '../constants'
 import { SkyBlockProfile, DungeonGroups, Dungeon, DungeonWeightGroup } from '../types/hypixel'
 import { DungeonStatsGroup } from '../types/hypixel/Dungeon'
-import { PlayerClassExperience } from '../types/hypixel/PlayerClass'
+import { PlayerClassExperience } from '../types/hypixel/DungeonPlayerClass'
+import { SkyBlockDungeonGroupResponse } from '../types/hypixel/SkyBlockProfileStats'
 
 class DungeonsGenerator extends Generator {
   /**
@@ -30,7 +31,7 @@ class DungeonsGenerator extends Generator {
     tank: 200,
   }
 
-  build(profile: SkyBlockProfile): object | null {
+  build(profile: SkyBlockProfile): SkyBlockDungeonGroupResponse | null {
     const dungeonGroups: DungeonGroups = profile.dungeons
 
     if (!this.hasDungeonData(dungeonGroups)) {

@@ -1,6 +1,7 @@
 import Generator from '../contracts/Generator'
 import { SlayerExperience } from '../constants'
 import { SkyBlockProfile, Slayer, SlayerBosses, SlayerWeightGroup } from '../types/hypixel'
+import { SkyBlockSlayerGroupResponse } from '../types/hypixel/SkyBlockProfileStats'
 
 class SlayersGenerator extends Generator {
   /**
@@ -16,7 +17,7 @@ class SlayersGenerator extends Generator {
     sven: 1962,
   }
 
-  build(profile: SkyBlockProfile): object | null {
+  build(profile: SkyBlockProfile): SkyBlockSlayerGroupResponse {
     const slayers: any = {
       total_coins_spent: this.getTotalCoinsSpentOnSlayers(profile.slayer_bosses),
       total_experience: this.calculateTotalCombinedSlayerExperience(profile.slayer_bosses),

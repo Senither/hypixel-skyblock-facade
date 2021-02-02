@@ -1,5 +1,5 @@
 import DungeonTypes from './DungeonTypes'
-import PlayerClass from './PlayerClass'
+import PlayerClass from './DungeonPlayerClass'
 
 export default interface DungeonGroups {
   selected_dungeon_class: string

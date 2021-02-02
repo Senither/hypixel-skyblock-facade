@@ -7,3 +7,5 @@ export { humanizeTime as humanizeTime } from './Time'
 
 export { isUuid as isUuid } from './Uuid'
 export { validateUuid as validateUuid } from './Uuid'
+
+export { parseSkyBlockProfiles as parseSkyBlockProfiles } from './SkyBlock'

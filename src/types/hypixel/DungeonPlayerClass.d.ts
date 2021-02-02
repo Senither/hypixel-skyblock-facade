@@ -1,4 +1,4 @@
-export default interface PlayerClass {
+export default interface DungeonPlayerClass {
   [name: string]: PlayerClassExperience
 
   healer: PlayerClassExperience
