@@ -13,3 +13,5 @@ export { default as SkillWeightGroup } from './weight/SkillWeightGroup'
 export { default as SkillWeightEntity } from './weight/SkillWeightEntity'
 export { default as SlayerWeightGroup } from './weight/SlayerWeightGroup'
 export { default as DungeonWeightGroup } from './weight/DungeonWeightGroup'
+
+export { default as SkyBlockProfileStats } from './SkyBlockProfileStats'

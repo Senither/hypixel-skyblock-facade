@@ -6,6 +6,7 @@ import ErrorHandler from './middleware/ErrorHandler'
 import AuthIsPresent from './middleware/AuthIsPresent'
 import HelloRoute from './routes/v1/Hello'
 import GetProfiles from './routes/v1/GetProfiles'
+import GetProfileWithStrategy from './routes/v1/GetProfileWithStrategy'
 
 export default class Application {
   /**
@@ -31,6 +32,7 @@ export default class Application {
 
     this.server.get('/v1/hello', HelloRoute)
     this.server.get('/v1/profiles/:uuid', GetProfiles)
+    this.server.get('/v1/profiles/:uuid/:strategy', GetProfileWithStrategy)
 
     this.server.use(NotFound)
     this.server.use(ErrorHandler)
