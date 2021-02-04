@@ -3,7 +3,49 @@ import HttpException from '../exceptions/HttpException'
 import DungeonsGenerator from '../generators/DungeonsGenerator'
 import SkillsGenerator from '../generators/SkillsGenerator'
 import SlayersGenerator from '../generators/SlayersGenerator'
-import { SkyBlockProfile, SkyBlockProfileMembersResponse, SkyBlockProfileStats } from '../types/hypixel'
+import { PlayerStats, SkyBlockProfile, SkyBlockProfileMembersResponse, SkyBlockProfilePlayerStats, SkyBlockProfileStats } from '../types/hypixel'
+
+/**
+ * Merges a SkyBlock profile, and a player profile together into a single object.
+ *
+ * @param profile The SkyBlock profile that should be merged
+ * @param player The player profile that should be merged
+ */
+export function mergeSkyBlockProfileAndPlayer(profile: SkyBlockProfileStats, player: PlayerStats): SkyBlockProfilePlayerStats {
+  return {
+    id: profile.id,
+    name: profile.name,
+    username: player.username,
+    last_save_at: profile.last_save_at,
+    weight: profile.weight,
+    weight_overflow: profile.weight_overflow,
+    skills: profile.skills,
+    slayers: profile.slayers,
+    dungeons: profile.dungeons,
+  }
+}
+
+/**
+ * Parses and formats the Player data into a more user-friend
+ * format with only the data we're actually interested in.
+ *
+ * @param player The player response object
+ * @param uuid The UUID of the player the player data were loaded for
+ */
+export function parseHypixelPlayer(player: AxiosResponse, uuid: string): PlayerStats {
+  if (player.data.hasOwnProperty('player') && player.data.player == null) {
+    throw new HttpException(404, `Found no Player data for a user with a UUID of '${uuid}'`)
+  }
+
+  const data: any = player.data.player
+
+  return {
+    username: data.displayname,
+    firstLogin: data.firstLogin,
+    lastLogin: data.lastLogin,
+    socialMedia: data.socialMedia,
+  }
+}
 
 /**
  * Parses and formats the SkyBlock profiles into a more user-friendly format
