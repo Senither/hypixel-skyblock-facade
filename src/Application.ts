@@ -28,9 +28,9 @@ export default class Application {
 
     this.server.use(express.static(path.join(__dirname, 'public')))
 
+    this.server.use(cors())
     this.server.use(AuthIsPresent)
     this.server.use(express.json())
-    this.server.use(cors())
 
     this.server.get('/v1/hello', HelloRoute)
     this.server.get('/v1/profiles/:uuid', GetProfiles)
