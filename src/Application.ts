@@ -1,4 +1,5 @@
 import path from 'path'
+import cors from 'cors'
 import axios from 'axios'
 import express from 'express'
 import NotFound from './middleware/NotFound'
@@ -29,6 +30,7 @@ export default class Application {
 
     this.server.use(AuthIsPresent)
     this.server.use(express.json())
+    this.server.use(cors())
 
     this.server.get('/v1/hello', HelloRoute)
     this.server.get('/v1/profiles/:uuid', GetProfiles)
