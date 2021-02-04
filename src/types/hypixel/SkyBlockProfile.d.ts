@@ -16,7 +16,7 @@ export default interface SkyBlockProfile {
   experience_skill_carpentry?: number
   experience_skill_runecrafting?: number
 
-  slayer_bosses: SlayerBosses
+  slayer_bosses?: SlayerBosses
 
-  dungeons: DungeonGroups
+  dungeons?: DungeonGroups
 }

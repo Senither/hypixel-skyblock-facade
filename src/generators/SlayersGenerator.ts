@@ -17,7 +17,11 @@ class SlayersGenerator extends Generator {
     sven: 1962,
   }
 
-  build(profile: SkyBlockProfile): SkyBlockSlayerGroupResponse {
+  build(profile: SkyBlockProfile): SkyBlockSlayerGroupResponse | null {
+    if (profile.slayer_bosses == undefined) {
+      return null
+    }
+
     const slayers: any = {
       total_coins_spent: this.getTotalCoinsSpentOnSlayers(profile.slayer_bosses),
       total_experience: this.calculateTotalCombinedSlayerExperience(profile.slayer_bosses),

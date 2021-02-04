@@ -32,6 +32,10 @@ class DungeonsGenerator extends Generator {
   }
 
   build(profile: SkyBlockProfile): SkyBlockDungeonGroupResponse | null {
+    if (profile.dungeons == undefined) {
+      return null
+    }
+
     const dungeonGroups: DungeonGroups = profile.dungeons
 
     if (!this.hasDungeonData(dungeonGroups)) {
