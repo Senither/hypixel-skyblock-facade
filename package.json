@@ -5,8 +5,8 @@
   "description": "A stateless API facade for the Hypixel SkyBlock API",
   "license": "MIT",
   "scripts": {
-    "start": "yarn build && node build/index",
-    "build": "tsc && yarn copy-files",
+    "start": "npm run-script build && node build/index",
+    "build": "tsc && npm run-script copy-files",
     "watch": "nodemon src/index.ts",
     "copy-files": "copyfiles -u 1 src/**/*.html build/"
   },
