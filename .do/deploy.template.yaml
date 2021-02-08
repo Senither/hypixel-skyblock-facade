@@ -1,0 +1,19 @@
+spec:
+  name: hypixel-skyblock-facade
+  services:
+    - name: hypixel-skyblock-facade
+      dockerfile_path: Dockerfile
+      github:
+        branch: master
+        deploy_on_push: true
+        repo: Senither/hypixel-skyblock-facade
+      health_check:
+        http_path: /
+      cors:
+        allow_origins:
+          - regex: .*
+      http_port: 9281
+      routes:
+        - path: /
+      instance_count: 1
+      instance_size_slug: basic-xs

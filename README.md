@@ -14,6 +14,9 @@ This API acts as a facade to the real Hypixel API, its purpose is to make it eas
 - [Installation using Docker](#installation-using-docker)
   - [Prerequisites](#prerequisites-1)
   - [Setup Guide](#setup-guide-1)
+- [Deploy directly to DigitalOcean](#deploy-directly-to-digitalocean)
+  - [Prerequisites](#prerequisites-2)
+  - [Setup Guide](#setup-guide-2)
 - [Environment Variables](#environment-variables)
 - [Usage](#usage)
 - [Changelog](#changelog)
@@ -75,6 +78,18 @@ From here you can make any number of changes to the API that you want, and when 
     docker-compose up -d
 
 The command will build the image if it doesn't already exists, and start a detached instance of the API, you can also specify `--build` if you want to enforce that a new image is built.
+
+## Deploy directly to DigitalOcean
+
+### Prerequisites
+
+You'll need a [DigitalOcean Account](https://m.do.co/c/9f589c4101c3) to deploy directly to DO, if you don't already have an account use can use the referral link below to get some free credits so you can try hosting the API for free.
+
+### Setup Guide
+
+Click the button below to deploy the app to the DigitalOcean App Platform, from there just follow the setup instructions, and once the application have been built and deployed to the DigitalOcean App Platform you'll get a URL where you can access the API.
+
+[![Deploy to DO](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/Senither/hypixel-skyblock-facade/tree/master)
 
 ## Environment Variables
 
