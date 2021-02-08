@@ -8,19 +8,25 @@ This API acts as a facade to the real Hypixel API, its purpose is to make it eas
 
 ## Table of Content
 
-- [Prerequisites](#prerequisites)
-- [Installation](#installation)
+- [Installation using NodeJS](#installation-using-nodejs)
+  - [Prerequisites](#prerequisites)
+  - [Setup Guide](#setup-guide)
+- [Installation using Docker](#installation-using-docker)
+  - [Prerequisites](#prerequisites-1)
+  - [Setup Guide](#setup-guide-1)
 - [Environment Variables](#environment-variables)
 - [Usage](#usage)
 - [Changelog](#changelog)
 - [Contributing](#contributing)
 - [License](#License)
 
-## Prerequisites
+## Installation using NodeJS
+
+### Prerequisites
 
 - NodeJS >= 14
 
-## Installation
+### Setup Guide
 
 To get started, clone down the repository using:
 
@@ -39,6 +45,36 @@ When all the dependencies have been installed you're can now ready to launch the
     npm start
 
 You can also launch the site in watch mode using `yarn watch` or `npm run-script watch`, which makes development a lot easier since the entire app is reloaded anytime code changes are made.
+
+## Installation using Docker
+
+### Prerequisites
+
+- Docker >= 20
+
+_Older versions may also work, but have not been tested._
+
+### Setup Guide
+
+Running the API via Docker is made easy using [Docker Hub](https://hub.docker.com/r/senither/hypixel-skyblock-facade), to get started right away you can use:
+
+    docker run -d -p 9281:9281 --rm senither/hypixel-skyblock-facade
+
+And you're done! The command will start a detached instance of the API listening on port `9281`, and ensure that the container is deleted after you're done using it.
+
+> The command will launch the API with the `latest` tag, if you want to run a different version of the API you'll have to specify it at the end of the image name, checkout the [Docker Hub Repository](https://hub.docker.com/r/senither/hypixel-skyblock-facade) to see the versions available.
+>
+> https://hub.docker.com/r/senither/hypixel-skyblock-facade/tags
+
+If you want to modify the API in any way you'll have to build the Docker image yourself, this is also easy to do using [Docker Compose](https://docs.docker.com/compose/), before we start you'll need to clone down the code using git, you can do this using:
+
+    git clone https://github.com/Senither/hypixel-skyblock-facade.git
+
+From here you can make any number of changes to the API that you want, and when you're ready to start the API you can use [Docker Compose](https://docs.docker.com/compose/) to start the API.
+
+    docker-compose up -d
+
+The command will build the image if it doesn't already exists, and start a detached instance of the API, you can also specify `--build` if you want to enforce that a new image is built.
 
 ## Environment Variables
 
