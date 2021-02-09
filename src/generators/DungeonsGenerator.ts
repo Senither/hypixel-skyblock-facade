@@ -15,20 +15,20 @@ class DungeonsGenerator extends Generator {
   private level50Experience = 569809640
 
   /**
-   * The dungeon weight breakpoints, these values are used to
-   * calculate a dungeon class weight by limiting points at
-   * level 50 to the breakpoints, all XP past level 50
-   * will be given at 1/4 the rate.
+   * The dungeon weight percentage, these values are used to help
+   * calculate a dungeon weight by specifying how much of the
+   * total weight calculated that should be counted, all
+   * XP past level 50 will be given at 1/4 the rate.
    *
    * @type Object
    */
   private weights: DungeonWeightGroup = {
-    catacombs: 6500,
-    healer: 200,
-    mage: 200,
-    berserker: 200,
-    archer: 200,
-    tank: 200,
+    catacombs: 0.0002149604615,
+    healer: 0.0000045254834,
+    mage: 0.0000045254834,
+    berserker: 0.0000045254834,
+    archer: 0.0000045254834,
+    tank: 0.0000045254834,
   }
 
   build(profile: SkyBlockProfile): SkyBlockDungeonGroupResponse | null {
@@ -227,10 +227,10 @@ class DungeonsGenerator extends Generator {
    * @param experience The total amount of experience in the current slayer type
    */
   private calculateWeight(type: string, level: number, experience: number) {
-    let maxPoints = this.weights[type]
+    let percentageModifier = this.weights[type]
 
     // Calculates the base weight using the players level
-    let base = (Math.pow(level * 10, 3) * (maxPoints / 100000)) / 1250
+    let base = Math.pow(level, 4.5) * percentageModifier
 
     // If the dungeon XP is below the requirements for a level 50 dungeon we'll
     // just return our weight right away.
@@ -244,10 +244,11 @@ class DungeonsGenerator extends Generator {
     // Calculates the XP above the level 50 requirement, and the splitter
     // value, weight given past level 50 is given at 1/4 the rate.
     let remaining = experience - this.level50Experience
-    let splitter = (4 * this.level50Experience) / maxPoints
+    let splitter = (4 * this.level50Experience) / base
 
+    // Calculates the dungeon overflow weight and returns it to the weight object builder.
     return {
-      weight: base,
+      weight: Math.floor(base),
       weight_overflow: Math.pow(remaining / splitter, 0.968),
     }
   }
