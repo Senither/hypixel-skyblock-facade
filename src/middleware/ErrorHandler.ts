@@ -23,6 +23,9 @@ export default (error: any, _: Request, response: Response, __: any) => {
       case 429:
         return createJsonResponse(response, 429, 'You have hit the rate-limit, please slow down your requests')
 
+      case 502:
+        return createJsonResponse(response, 502, 'Hypixels API is currently experiencing some technical issues, try again later')
+
       case 503:
         return createJsonResponse(response, 503, 'Hypixels API is currently in maintenance mode, try again later')
     }
