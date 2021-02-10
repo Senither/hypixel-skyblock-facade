@@ -85,6 +85,8 @@ The command will build the image if it doesn't already exists, and start a detac
 
 You'll need a [DigitalOcean Account](https://m.do.co/c/9f589c4101c3) to deploy directly to DO, if you don't already have an account use can use the referral link below to get some free credits so you can try hosting the API for free.
 
+Referral link: https://m.do.co/c/9f589c4101c3
+
 ### Setup Guide
 
 Click the button below to deploy the app to the DigitalOcean App Platform, from there just follow the setup instructions, and once the application have been built and deployed to the DigitalOcean App Platform you'll get a URL where you can access the API.
