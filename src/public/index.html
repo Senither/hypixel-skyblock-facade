@@ -80,62 +80,269 @@
           </div>
         </section>
 
-        <section class="py-12 px-4 text-center">
+        <section class="pt-12 px-4 text-center">
           <div class="w-full max-w-2xl mx-auto">
-            <h3 class="text-3xl mt-2 mb-6 leading-tight font-semibold font-heading">API Documentation</h3>
+            <h3 class="text-4xl mt-2 mb-6 leading-tight font-semibold font-heading">API Reference</h3>
           </div>
         </section>
 
-        <section class="py-8 px-4 bg-gray-800 shadow-md rounded-md shadow-lg">
-          <div class="flex flex-wrap mb-8">
-            <div class="px-2 lg:pr-16 mb-3">
-              <h2 class="text-2xl font-semibold">
-                <span class="p-2 bg-indigo-500 text-white text-base rounded-md">GET</span>
-                /hello
-              </h2>
+        <section class="mx-auto max-w-full">
+          <div class="grid py-6 grid-cols-4 md:space-x-5">
+            <div class="col-span-4 md:col-span-1 pb-4 md:pb-0">
+              <div class="font-semibold tracking-wide">
+                <p class="text-2xl text-gray-300 font-extrabold">Authentication</p>
+                <p class="text-gray-500">Authentication & Hypixel Tokens</p>
+              </div>
             </div>
-            <div class="px-2 lg:pr-16">
-              <p class="mb-3">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sint voluptates nam consequatur quibusdam earum, veniam porro velit error eius ipsa
-                distinctio facilis, accusantium quisquam nihil adipisci repellat cumque deleniti accusamus.
+            <div class="col-span-4 md:col-span-3 p-4 bg-gray-800 rounded-md shadow-md text-gray-300 space-y-1">
+              <p>
+                The Facade API uses <a class="text-indigo-400 hover:text-indigo-300" href="https://api.hypixel.net/">Hypixel API</a> keys to authenticate
+                requests. You can get your own API key by logging into <code class="py-0.5 px-1 bg-gray-900 rounded-sm">mc.hypixel.net</code> with a Minecraft
+                account and running <code class="py-0.5 px-1 bg-gray-900 rounded-sm">/api new</code> to generate a new API token.
+              </p>
+              <p>Once you have your own token you can authenticate with the API in two different ways.</p>
+              <p>
+                You can either use the Hypixel API key query paramater, this is the exact same way you authenticate with the actual Hypixel API, to use this
+                method you should add a <code class="py-0.5 px-1 bg-gray-900 rounded-sm">?key=your-token-here</code> query paramater to the end of API requests.
+              </p>
+              <p>
+                You can also use an authorization header instead, to use this method you should add a
+                <code class="py-0.5 px-1 bg-gray-900 rounded-sm">Authorization</code> header to your API requests, where the value of the header is your API
+                token.
+              </p>
+            </div>
+          </div>
+
+          <div class="grid py-6 grid-cols-4 md:space-x-5">
+            <div class="col-span-4 md:col-span-1 pb-4 md:pb-0">
+              <div class="font-semibold tracking-wide">
+                <p class="text-2xl text-gray-300 font-extrabold">Responses</p>
+                <p class="text-gray-500">API responses and what to look for</p>
+              </div>
+            </div>
+            <div class="col-span-4 md:col-span-3 p-4 bg-gray-800 rounded-md shadow-md text-gray-300">
+              <p>
+                All endpoints in the API returns all their responses in JSON, all requests will return a
+                <code class="py-0.5 px-1 bg-gray-900 rounded-sm">status</code> key which should match the response status code that was returned, it will also
+                return a <code class="py-0.5 px-1 bg-gray-900 rounded-sm">data</code> key for successful responses, and a
+                <code class="py-0.5 px-1 bg-gray-900 rounded-sm">reason</code> key for failed requests.
               </p>
 
-              <div class="flex flex-row">
+              <p class="py-4 font-bold">API response codes</p>
+              <table class="w-full bg-gray-900 rounded-t-md text-gray-200">
+                <tr class="text-left border-b border-gray-500">
+                  <th class="px-4 py-3 w-32">Status Code</th>
+                  <th class="px-4 py-3">Reason</th>
+                </tr>
+                <tr class="bg-gray-700 border-b border-gray-600">
+                  <td class="px-4 py-3 font-semibold">200</td>
+                  <td class="px-4 py-3">Successful request, this will return the data for the profile that were requested.</td>
+                </tr>
+                <tr class="bg-gray-700 border-b border-gray-600">
+                  <td class="px-4 py-3 font-semibold">400</td>
+                  <td class="px-4 py-3">
+                    The request is missing an authentication method, you must either provide a valid
+                    <code class="py-0.5 px-1 bg-gray-900 rounded-sm">key</code> query paramater, or an
+                    <code class="py-0.5 px-1 bg-gray-900 rounded-sm">Authentication</code> header.
+                  </td>
+                </tr>
+                <tr class="bg-gray-700 border-b border-gray-600">
+                  <td class="px-4 py-3 font-semibold">403</td>
+                  <td class="px-4 py-3">The provided Hypixel API token is invalid, or does not exists.</td>
+                </tr>
+                <tr class="bg-gray-700 border-b border-gray-600">
+                  <td class="px-4 py-3 font-semibold">404</td>
+                  <td class="px-4 py-3">There is either no player with the given UUID, or the player has no SkyBlock profiles.</td>
+                </tr>
+                <tr class="bg-gray-700 border-b border-gray-600">
+                  <td class="px-4 py-3 font-semibold">429</td>
+                  <td class="px-4 py-3">
+                    The Hypixel API rate-limited was reached, if you see this in your resposnes you should slow down requests, or start caching response to
+                    prevent having to make as many requests in the future.
+                    <br />The API will return <code class="py-0.5 px-1 bg-gray-900 rounded-sm">RateLimit-Remaining</code> and
+                    <code class="py-0.5 px-1 bg-gray-900 rounded-sm">RateLimit-Reset</code> headers with every request that you can use to see how many requests
+                    you have left for the current minute.
+                  </td>
+                </tr>
+                <tr class="bg-gray-700 border-b border-gray-600">
+                  <td class="px-4 py-3 font-semibold">500</td>
+                  <td class="px-4 py-3">
+                    An internal error occurred in the API, or the Hypixel API responded with an unknown error code.
+                    <br />If this error code is returned, you may also see a <code class="py-0.5 px-1 bg-gray-900 rounded-sm">stack</code> JSON key which tells
+                    you where in the code it broke, please report these errors back on
+                    <a class="text-indigo-400 hover:text-indigo-300" href="https://github.com/Senither/hypixel-skyblock-facade">GitHub</a> as an issue so they
+                    can be fixed.
+                  </td>
+                </tr>
+                <tr class="bg-gray-700 border-b border-gray-600">
+                  <td class="px-4 py-3 font-semibold">502</td>
+                  <td class="px-4 py-3">
+                    Hypixels API is experiencing some technical issues and may not be available, if you get this error code just re-send your request at a later
+                    time, hopefully Hypixels API will work again by then.
+                  </td>
+                </tr>
+                <tr class="bg-gray-700 border-b border-gray-600">
+                  <td class="px-4 py-3 font-semibold">503</td>
+                  <td class="px-4 py-3">
+                    Hypixels API is in maintenance mode, you can't really do much about this, just try re-send your request when the API is back online.
+                  </td>
+                </tr>
+              </table>
+            </div>
+          </div>
+
+          <div class="grid py-6 grid-cols-4 md:space-x-5">
+            <div class="col-span-4 md:col-span-1 pb-4 md:pb-0">
+              <div class="font-semibold tracking-wide">
+                <p class="text-2xl text-gray-300 font-extrabold">API Endpoints</p>
+                <p class="text-gray-500">URLs and how to use the API</p>
+              </div>
+            </div>
+            <div class="col-span-4 md:col-span-3 p-4 space-y-12 bg-gray-800 rounded-md shadow-md text-gray-300">
+              <div>
+                <h4 class="mb-4 text-xl font-semibold tracking-wide">
+                  <span class="py-2 px-3 mr-2 text-base bg-indigo-500 rounded-md">GET</span>
+                  /v1/hello
+                </h4>
                 <p>
-                  Lorem ipsum dolor sit amet consectetur, adipisicing, elit. Animi nisi velit fuga iste, ea, ut in? Nesciunt, explicabo possimus quae magnam.
-                  Amet tenetur quaerat natus doloribus molestiae dignissimos, temporibus est.
+                  A simple pingable endpoint to check if the API is online and is working, will respond with
+                  <span class="italic text-gray-400">"Hello, World"</span>.
                 </p>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur, adipisicing, elit. Animi nisi velit fuga iste, ea, ut in? Nesciunt, explicabo possimus quae magnam.
-                  Amet tenetur quaerat natus doloribus molestiae dignissimos, temporibus est.
-                </p>
+
+                <p class="py-4 font-bold">Example</p>
+                <pre class="py-3 px-6 bg-gray-900 rounded-md shadow-md overflow-auto">
+curl -X GET 'https://hypixel-api.senither.com/v1/hello' \
+     -H 'Authorization: your-hypixel-api-token'</pre
+                >
+              </div>
+
+              <div>
+                <h4 class="mb-4 text-xl font-semibold tracking-wide">
+                  <span class="py-2 px-3 mr-2 text-base bg-indigo-500 rounded-md">GET</span>
+                  /v1/profiles/<span class="text-indigo-400">:uuid</span>
+                </h4>
+                <p>Gets every profile a user has as a list, where each profile have had its levels and stats calculated.</p>
+
+                <p class="py-4 font-bold">Example</p>
+                <pre class="py-3 px-6 bg-gray-900 rounded-md shadow-md overflow-auto">
+curl -X GET 'https://hypixel-api.senither.com/v1/profiles/18e174ef-078f-4275-8dcd-51d495d1096b' \
+     -H 'Authorization: your-hypixel-api-token'</pre
+                >
+
+                <p class="py-4 font-bold">Paramaters</p>
+                <table class="w-full bg-gray-900 rounded-t-md text-gray-200">
+                  <tr class="text-left border-b border-gray-500">
+                    <th class="px-4 py-3 w-32">Paramater</th>
+                    <th class="px-4 py-3">Description</th>
+                  </tr>
+                  <tr class="bg-gray-700 border-b border-gray-600">
+                    <td class="px-4 py-3 font-semibold">UUID</td>
+                    <td class="px-4 py-3">This is the UUID of the player that the profiles should be loaded for.</td>
+                  </tr>
+                </table>
+              </div>
+
+              <div>
+                <h4 class="mb-4 text-xl font-semibold tracking-wide">
+                  <span class="py-2 px-3 mr-2 text-base bg-indigo-500 rounded-md">GET</span>
+                  /v1/profiles/<span class="text-indigo-400">:uuid</span>/<span class="text-indigo-400">:strategy</span>
+                </h4>
+                <p>Gets a single profile for the player with the given UUID, the given strategy is what selects the players profile.</p>
+
+                <p class="py-4 font-bold">Example</p>
+                <pre class="py-3 px-6 bg-gray-900 rounded-md shadow-md overflow-auto">
+curl -X GET 'https://hypixel-api.senither.com/v1/profiles/18e174ef-078f-4275-8dcd-51d495d1096b/weight' \
+     -H 'Authorization: your-hypixel-api-token'</pre
+                >
+
+                <p class="py-4 font-bold">Paramaters</p>
+                <table class="w-full bg-gray-900 rounded-t-md text-gray-200">
+                  <tr class="text-left border-b border-gray-500">
+                    <th class="px-4 py-3 w-32">Paramater</th>
+                    <th class="px-4 py-3">Description</th>
+                  </tr>
+                  <tr class="bg-gray-700 border-b border-gray-600">
+                    <td class="px-4 py-3 font-semibold">UUID</td>
+                    <td class="px-4 py-3">This is the UUID of the player that the profile should be loaded for.</td>
+                  </tr>
+                  <tr class="bg-gray-700 border-b border-gray-600">
+                    <td class="px-4 py-3 font-semibold">Strategy</td>
+                    <td class="px-4 py-3">The strategy that should be used to select the profile, you can see the list of available strategies below.</td>
+                  </tr>
+                </table>
               </div>
             </div>
           </div>
 
-          <div class="flex flex-wrap">
-            <div class="px-2 lg:pr-16 mb-3">
-              <h2 class="text-2xl font-semibold">
-                <span class="p-2 bg-indigo-500 text-white text-base rounded-md">GET</span>
-                /hello
-              </h2>
+          <div class="grid py-6 grid-cols-4 md:space-x-5">
+            <div class="col-span-4 md:col-span-1 pb-4 md:pb-0">
+              <div class="font-semibold tracking-wide">
+                <p class="text-2xl text-gray-300 font-extrabold">Strategies</p>
+                <p class="text-gray-500">How to select SkyBlock profiles effectively.</p>
+              </div>
             </div>
-            <div class="px-2 lg:pr-16">
-              <p class="mb-3">
-                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Sint voluptates nam consequatur quibusdam earum, veniam porro velit error eius ipsa
-                distinctio facilis, accusantium quisquam nihil adipisci repellat cumque deleniti accusamus.
+            <div class="col-span-4 md:col-span-3 p-4 bg-gray-800 rounded-md shadow-md text-gray-300">
+              <p>
+                The strategies are keys that can be given to the API to tell it how to select a profile, if no strategy is given all profiles for a player will
+                be returned as a list instead.
               </p>
 
-              <div class="flex flex-row">
-                <p>
-                  Lorem ipsum dolor sit amet consectetur, adipisicing, elit. Animi nisi velit fuga iste, ea, ut in? Nesciunt, explicabo possimus quae magnam.
-                  Amet tenetur quaerat natus doloribus molestiae dignissimos, temporibus est.
-                </p>
-                <p>
-                  Lorem ipsum dolor sit amet consectetur, adipisicing, elit. Animi nisi velit fuga iste, ea, ut in? Nesciunt, explicabo possimus quae magnam.
-                  Amet tenetur quaerat natus doloribus molestiae dignissimos, temporibus est.
-                </p>
-              </div>
+              <p class="py-4 font-bold">List of strategies</p>
+              <table class="w-full bg-gray-900 rounded-t-md text-gray-200">
+                <tr class="text-left border-b border-gray-500">
+                  <th class="px-4 py-3">Name</th>
+                  <th class="px-4 py-3">Keys</th>
+                  <th class="px-4 py-3">Description</th>
+                </tr>
+                <tr class="bg-gray-700 border-b border-gray-600">
+                  <td class="px-4 py-3 w-32 font-semibold">Last Save At</td>
+                  <td class="px-4 py-3 flex flex-wrap">
+                    <span class="py-0.5 px-1 m-1 bg-indigo-500 rounded-sm">last_save_at</span>
+                    <span class="py-0.5 px-1 m-1 bg-indigo-500 rounded-sm">last_saved</span>
+                    <span class="py-0.5 px-1 m-1 bg-indigo-500 rounded-sm">last_save</span>
+                    <span class="py-0.5 px-1 m-1 bg-indigo-500 rounded-sm">latest</span>
+                    <span class="py-0.5 px-1 m-1 bg-indigo-500 rounded-sm">saved</span>
+                    <span class="py-0.5 px-1 m-1 bg-indigo-500 rounded-sm">save</span>
+                  </td>
+                  <td class="px-4 py-3">Selects the profile that was last used by the player.</td>
+                </tr>
+                <tr class="bg-gray-700 border-b border-gray-600">
+                  <td class="px-4 py-3 w-32 font-semibold">Weight</td>
+                  <td class="px-4 py-3 flex flex-wrap">
+                    <span class="py-0.5 px-1 m-1 bg-indigo-500 rounded-sm">weights</span>
+                    <span class="py-0.5 px-1 m-1 bg-indigo-500 rounded-sm">weight</span>
+                    <span class="py-0.5 px-1 m-1 bg-indigo-500 rounded-sm">we</span>
+                  </td>
+                  <td class="px-4 py-3">Selects the profile with the highest weight.</td>
+                </tr>
+                <tr class="bg-gray-700 border-b border-gray-600">
+                  <td class="px-4 py-3 w-32 font-semibold">Skills</td>
+                  <td class="px-4 py-3 flex flex-wrap">
+                    <span class="py-0.5 px-1 m-1 bg-indigo-500 rounded-sm">skills</span>
+                    <span class="py-0.5 px-1 m-1 bg-indigo-500 rounded-sm">skill</span>
+                  </td>
+                  <td class="px-4 py-3">Selects the profile with the highest skill average.</td>
+                </tr>
+                <tr class="bg-gray-700 border-b border-gray-600">
+                  <td class="px-4 py-3 w-32 font-semibold">Slayers XP</td>
+                  <td class="px-4 py-3 flex flex-wrap">
+                    <span class="py-0.5 px-1 m-1 bg-indigo-500 rounded-sm">slayers</span>
+                    <span class="py-0.5 px-1 m-1 bg-indigo-500 rounded-sm">slayer</span>
+                  </td>
+                  <td class="px-4 py-3">Selects the profile with the highest total slayer XP.</td>
+                </tr>
+                <tr class="bg-gray-700 border-b border-gray-600">
+                  <td class="px-4 py-3 w-32 font-semibold">Catacombs</td>
+                  <td class="px-4 py-3 flex flex-wrap">
+                    <span class="py-0.5 px-1 m-1 bg-indigo-500 rounded-sm">catacombs</span>
+                    <span class="py-0.5 px-1 m-1 bg-indigo-500 rounded-sm">catacomb</span>
+                    <span class="py-0.5 px-1 m-1 bg-indigo-500 rounded-sm">dungeons</span>
+                    <span class="py-0.5 px-1 m-1 bg-indigo-500 rounded-sm">dungeon</span>
+                    <span class="py-0.5 px-1 m-1 bg-indigo-500 rounded-sm">cata</span>
+                  </td>
+                  <td class="px-4 py-3">Selects the profile with the highest catacomb level.</td>
+                </tr>
+              </table>
             </div>
           </div>
         </section>
