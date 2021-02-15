@@ -1,6 +1,6 @@
 import Generator from '../contracts/Generator'
 import { GeneralSkillsExperience, RunecraftingSkillsExperience } from '../constants'
-import { SkillWeightEntity, SkillWeightGroup, SkyBlockProfile } from '../types/hypixel'
+import { PlayerStats, SkillWeightEntity, SkillWeightGroup, SkyBlockProfile } from '../types/hypixel'
 import { SkyBlockSkillGroupResponse } from '../types/hypixel/SkyBlockProfileStats'
 
 class SkillsGenerator extends Generator {
@@ -90,40 +90,61 @@ class SkillsGenerator extends Generator {
    */
   private weightSkills: string[] = ['mining', 'foraging', 'enchanting', 'farming', 'combat', 'fishing', 'alchemy', 'taming']
 
-  build(profile: SkyBlockProfile): SkyBlockSkillGroupResponse | null {
-    const mining = profile.experience_skill_mining || 0
-    const foraging = profile.experience_skill_foraging || 0
-    const enchanting = profile.experience_skill_enchanting || 0
-    const farming = profile.experience_skill_farming || 0
-    const combat = profile.experience_skill_combat || 0
-    const fishing = profile.experience_skill_fishing || 0
-    const alchemy = profile.experience_skill_alchemy || 0
-    const taming = profile.experience_skill_taming || 0
+  build(player: PlayerStats, profile: SkyBlockProfile): SkyBlockSkillGroupResponse | null {
+    let usingAchievements = false
+
+    let experiences = {
+      mining: profile.experience_skill_mining || 0,
+      foraging: profile.experience_skill_foraging || 0,
+      enchanting: profile.experience_skill_enchanting || 0,
+      farming: profile.experience_skill_farming || 0,
+      combat: profile.experience_skill_combat || 0,
+      fishing: profile.experience_skill_fishing || 0,
+      alchemy: profile.experience_skill_alchemy || 0,
+      taming: profile.experience_skill_taming || 0,
+      carpentry: profile.experience_skill_carpentry || 0,
+      runecrafting: profile.experience_skill_runecrafting || 0,
+    }
 
     // Checks if the player has any experience, if no experience is found
     // for the main skills we can assume the player has their skill
     // API disabled, and can instead return null.
-    if (mining + foraging + enchanting + farming + combat + fishing + alchemy + taming == 0) {
-      return null
+    if (this.sumExperienceGroup(experiences) == 0) {
+      usingAchievements = true
+
+      experiences = {
+        mining: this.getExperienceFromLevel(player.skyblockSkills.mining),
+        foraging: this.getExperienceFromLevel(player.skyblockSkills.foraging),
+        enchanting: this.getExperienceFromLevel(player.skyblockSkills.enchanting),
+        farming: this.getExperienceFromLevel(player.skyblockSkills.farming),
+        combat: this.getExperienceFromLevel(player.skyblockSkills.combat),
+        fishing: this.getExperienceFromLevel(player.skyblockSkills.fishing),
+        alchemy: this.getExperienceFromLevel(player.skyblockSkills.alchemy),
+        taming: this.getExperienceFromLevel(player.skyblockSkills.taming),
+        carpentry: 0,
+        runecrafting: 0,
+      }
+
+      if (this.sumExperienceGroup(experiences) == 0) {
+        return null
+      }
     }
 
-    const carpentry = profile.experience_skill_carpentry || 0
-    const runecrafting = profile.experience_skill_runecrafting || 0
-
     let skills: any = {
+      apiEnabled: !usingAchievements,
       average_skills: 0,
       weight: 0,
       weight_overflow: 0,
-      mining: this.calculateSkillProperties('mining', mining),
-      foraging: this.calculateSkillProperties('foraging', foraging),
-      enchanting: this.calculateSkillProperties('enchanting', enchanting),
-      farming: this.calculateSkillProperties('farming', farming),
-      combat: this.calculateSkillProperties('combat', combat),
-      fishing: this.calculateSkillProperties('fishing', fishing),
-      alchemy: this.calculateSkillProperties('alchemy', alchemy),
-      taming: this.calculateSkillProperties('taming', taming),
-      carpentry: this.calculateSkillProperties('carpentry', carpentry),
-      runecrafting: this.calculateSkillProperties('runecrafting', runecrafting),
+      mining: this.calculateSkillProperties('mining', experiences.mining),
+      foraging: this.calculateSkillProperties('foraging', experiences.foraging),
+      enchanting: this.calculateSkillProperties('enchanting', experiences.enchanting),
+      farming: this.calculateSkillProperties('farming', experiences.farming),
+      combat: this.calculateSkillProperties('combat', experiences.combat),
+      fishing: this.calculateSkillProperties('fishing', experiences.fishing),
+      alchemy: this.calculateSkillProperties('alchemy', experiences.alchemy),
+      taming: this.calculateSkillProperties('taming', experiences.taming),
+      carpentry: this.calculateSkillProperties('carpentry', experiences.carpentry),
+      runecrafting: this.calculateSkillProperties('runecrafting', experiences.runecrafting),
     }
 
     skills.average_skills = this.calculateSkillAverage(skills)
@@ -248,6 +269,34 @@ class SkillsGenerator extends Generator {
         return skills[v][type]
       })
       .reduce((accumulator, current) => accumulator + current)
+  }
+
+  /**
+   * Sums up all the values in the given experience group object.
+   *
+   * @param experienceGroup The experience group object
+   */
+  private sumExperienceGroup(experienceGroup: any): number {
+    let total = 0
+
+    for (let name of Object.keys(experienceGroup)) {
+      total += experienceGroup[name]
+    }
+
+    return total
+  }
+
+  /**
+   * Gets the total amount experience required to get the given level.
+   *
+   * @param level The level of the skill
+   */
+  private getExperienceFromLevel(level: number): number {
+    let totalRequiredExperience = 0
+    for (let i = 0; i < Math.min(level, GeneralSkillsExperience.length); i++) {
+      totalRequiredExperience += GeneralSkillsExperience[i]
+    }
+    return totalRequiredExperience
   }
 }
 

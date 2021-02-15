@@ -1,6 +1,6 @@
 import Generator from '../contracts/Generator'
 import { SlayerExperience } from '../constants'
-import { SkyBlockProfile, Slayer, SlayerBosses, SlayerWeightGroup } from '../types/hypixel'
+import { PlayerStats, SkyBlockProfile, Slayer, SlayerBosses, SlayerWeightGroup } from '../types/hypixel'
 import { SkyBlockSlayerGroupResponse } from '../types/hypixel/SkyBlockProfileStats'
 
 class SlayersGenerator extends Generator {
@@ -17,7 +17,7 @@ class SlayersGenerator extends Generator {
     sven: 1962,
   }
 
-  build(profile: SkyBlockProfile): SkyBlockSlayerGroupResponse | null {
+  build(_: PlayerStats, profile: SkyBlockProfile): SkyBlockSlayerGroupResponse | null {
     if (profile.slayer_bosses == undefined) {
       return null
     }

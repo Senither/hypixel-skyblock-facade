@@ -1,7 +1,7 @@
 import Generator from '../contracts/Generator'
 import { humanizeTime } from '../utils'
 import { DungeonsExperience } from '../constants'
-import { SkyBlockProfile, DungeonGroups, Dungeon, DungeonWeightGroup } from '../types/hypixel'
+import { SkyBlockProfile, DungeonGroups, Dungeon, DungeonWeightGroup, PlayerStats } from '../types/hypixel'
 import { DungeonStatsGroup } from '../types/hypixel/Dungeon'
 import { PlayerClassExperience } from '../types/hypixel/DungeonPlayerClass'
 import { SkyBlockDungeonGroupResponse } from '../types/hypixel/SkyBlockProfileStats'
@@ -31,7 +31,7 @@ class DungeonsGenerator extends Generator {
     tank: 0.0000045254834,
   }
 
-  build(profile: SkyBlockProfile): SkyBlockDungeonGroupResponse | null {
+  build(_: PlayerStats, profile: SkyBlockProfile): SkyBlockDungeonGroupResponse | null {
     if (profile.dungeons == undefined) {
       return null
     }

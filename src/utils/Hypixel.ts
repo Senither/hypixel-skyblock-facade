@@ -38,12 +38,23 @@ export function parseHypixelPlayer(player: AxiosResponse, uuid: string): PlayerS
   }
 
   const data: any = player.data.player
+  const achievements: any = data.achievements
 
   return {
     username: data.displayname,
     firstLogin: data.firstLogin,
     lastLogin: data.lastLogin,
     socialMedia: data.socialMedia,
+    skyblockSkills: {
+      mining: achievements.skyblock_excavator || 0,
+      foraging: achievements.skyblock_gatherer || 0,
+      enchanting: achievements.skyblock_augmentation || 0,
+      farming: achievements.skyblock_harvester || 0,
+      combat: achievements.skyblock_combat || 0,
+      fishing: achievements.skyblock_angler || 0,
+      alchemy: achievements.skyblock_concoctor || 0,
+      taming: achievements.skyblock_domesticator || 0,
+    },
   }
 }
 
@@ -51,10 +62,11 @@ export function parseHypixelPlayer(player: AxiosResponse, uuid: string): PlayerS
  * Parses and formats the SkyBlock profiles into a more user-friendly format
  * with only the skills, slayers, dungeon, and weight information.
  *
+ * @param player The general Hypixel player stats
  * @param profiles A SkyBlock profiles response object
  * @param uuid The UUID of the player the profiles were loaded for
  */
-export function parseSkyBlockProfiles(profiles: AxiosResponse, uuid: string): SkyBlockProfileStats[] {
+export function parseSkyBlockProfiles(player: PlayerStats, profiles: AxiosResponse, uuid: string): SkyBlockProfileStats[] {
   if (profiles.data.hasOwnProperty('profiles') && profiles.data.profiles == null) {
     throw new HttpException(404, `Found no SkyBlock profiles for a user with a UUID of '${uuid}'`)
   }
@@ -78,9 +90,9 @@ export function parseSkyBlockProfiles(profiles: AxiosResponse, uuid: string): Sk
       },
       weight: 0,
       weight_overflow: 0,
-      skills: SkillsGenerator.build(profile),
-      slayers: SlayersGenerator.build(profile),
-      dungeons: DungeonsGenerator.build(profile),
+      skills: SkillsGenerator.build(player, profile),
+      slayers: SlayersGenerator.build(player, profile),
+      dungeons: DungeonsGenerator.build(player, profile),
     })
   }
 
