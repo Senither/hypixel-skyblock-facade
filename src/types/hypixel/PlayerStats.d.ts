@@ -19,4 +19,7 @@ export default interface PlayerStats {
     alchemy: number
     taming: number
   }
+  dungeons: {
+    secrets_found: number
+  }
 }

@@ -55,6 +55,9 @@ export function parseHypixelPlayer(player: AxiosResponse, uuid: string): PlayerS
       alchemy: achievements.skyblock_concoctor || 0,
       taming: achievements.skyblock_domesticator || 0,
     },
+    dungeons: {
+      secrets_found: achievements.skyblock_treasure_hunter || 0,
+    },
   }
 }
 

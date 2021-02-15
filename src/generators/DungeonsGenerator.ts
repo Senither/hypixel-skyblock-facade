@@ -31,7 +31,7 @@ class DungeonsGenerator extends Generator {
     tank: 0.0000045254834,
   }
 
-  build(_: PlayerStats, profile: SkyBlockProfile): SkyBlockDungeonGroupResponse | null {
+  build(player: PlayerStats, profile: SkyBlockProfile): SkyBlockDungeonGroupResponse | null {
     if (profile.dungeons == undefined) {
       return null
     }
@@ -46,6 +46,7 @@ class DungeonsGenerator extends Generator {
       selected_class: dungeonGroups.selected_dungeon_class,
       weight: 0,
       weight_overflow: 0,
+      secrets_found: player.dungeons.secrets_found,
       classes: {
         healer: this.generateClassProperties('healer', dungeonGroups.player_classes.healer),
         mage: this.generateClassProperties('mage', dungeonGroups.player_classes.mage),
