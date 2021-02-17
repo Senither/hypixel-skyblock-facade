@@ -83,7 +83,7 @@ The command will build the image if it doesn't already exists, and start a detac
 
 ### Prerequisites
 
-You'll need a [DigitalOcean Account](https://m.do.co/c/9f589c4101c3) to deploy directly to DO, if you don't already have an account use can use the referral link below to get some free credits so you can try hosting the API for free.
+You'll need a [DigitalOcean Account](https://m.do.co/c/9f589c4101c3) to deploy directly to DO, if you don't already have an account you can use the referral link below to get some free credits so you can try hosting the API for free.
 
 Referral link: https://m.do.co/c/9f589c4101c3
 
