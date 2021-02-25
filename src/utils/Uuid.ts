@@ -22,7 +22,7 @@ export function isUuid(uuid: string | undefined): boolean {
  */
 export function validateUuid(uuid: string | undefined): string {
   if (uuid == undefined || !isUuid(uuid)) {
-    throw new HttpException(400, 'Invalid UUID provided, you must provide a valid UUID')
+    throw new HttpException(404, 'Invalid UUID provided, you must provide a valid UUID')
   }
 
   return uuid
