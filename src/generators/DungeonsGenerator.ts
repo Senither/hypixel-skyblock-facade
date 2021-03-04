@@ -222,10 +222,10 @@ class DungeonsGenerator extends Generator {
   }
 
   /**
-   * Calculates the weight for the given slayer type using the experience.
+   * Calculates the weight for the given dungeon class using the experience.
    *
-   * @param type The slayer type that should be used in the calculations
-   * @param experience The total amount of experience in the current slayer type
+   * @param type The class that should be used in the calculations
+   * @param experience The total amount of experience in the current class
    */
   private calculateWeight(type: string, level: number, experience: number) {
     let percentageModifier = this.weights[type]
