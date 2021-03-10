@@ -50,11 +50,11 @@ class SkillsGenerator extends Generator {
       divider: 220689,
       maxLevel: 60,
     },
-    // Maxes out combat at 800 points at level 50.
+    // Maxes out combat at 1,500 points at level 60.
     combat: {
-      exponent: 1.22307,
+      exponent: 1.15797687265,
       divider: 275862,
-      maxLevel: 50,
+      maxLevel: 60,
     },
     // Maxes out fishing at 2,500 points at level 50.
     fishing: {
