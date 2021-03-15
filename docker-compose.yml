@@ -8,5 +8,6 @@ services:
     image: senither/hypixel-skyblock-facade
     environment:
       PORT: 9281
+      CLUSTER_SIZE: 4
     ports:
       - 9281:9281

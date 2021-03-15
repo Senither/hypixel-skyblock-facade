@@ -2,9 +2,13 @@ import Application from './Application'
 
 const app = new Application()
 
-app
-  .bootstrap()
-  .then(() => {
-    return app.serve()
-  })
-  .catch(console.error)
+if (app.isMaster()) {
+  app.createCluster()
+} else {
+  app
+    .bootstrap()
+    .then(() => {
+      return app.serve()
+    })
+    .catch(console.error)
+}
