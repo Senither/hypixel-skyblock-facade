@@ -55,6 +55,7 @@ class SlayersGenerator extends Generator {
       totalCoins += (slayer.boss_kills_tier_1 || 0) * 2000
       totalCoins += (slayer.boss_kills_tier_2 || 0) * 10000
       totalCoins += (slayer.boss_kills_tier_3 || 0) * 50000
+      totalCoins += (slayer.boss_kills_tier_4 || 0) * 100000
     }
 
     return totalCoins
@@ -92,6 +93,7 @@ class SlayersGenerator extends Generator {
         tier_2: slayer.boss_kills_tier_1 || 0,
         tier_3: slayer.boss_kills_tier_2 || 0,
         tier_4: slayer.boss_kills_tier_3 || 0,
+        tier_5: slayer.boss_kills_tier_4 || 0,
       },
     }
   }
