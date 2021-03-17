@@ -10,6 +10,7 @@ export default interface SkyBlockProfileStats {
   skills: SkyBlockSkillGroupResponse | null
   slayers: SkyBlockSlayerGroupResponse | null
   dungeons: SkyBlockDungeonGroupResponse | null
+  coins: Banking | null
 }
 
 interface SkyBlockSkillGroupResponse {
@@ -137,4 +138,9 @@ interface SkyBlockDungeonTimeGroupResponse {
 interface SkyBlockDungeonTimesResponse {
   time: string
   seconds: number
+}
+
+interface Banking {
+  bank?: number | null
+  purse?: number | null
 }

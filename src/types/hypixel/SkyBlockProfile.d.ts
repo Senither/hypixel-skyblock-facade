@@ -19,4 +19,6 @@ export default interface SkyBlockProfile {
   slayer_bosses?: SlayerBosses
 
   dungeons?: DungeonGroups
+
+  coin_purse?: number
 }

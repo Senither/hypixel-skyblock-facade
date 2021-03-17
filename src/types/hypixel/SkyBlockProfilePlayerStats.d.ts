@@ -13,4 +13,9 @@ export default interface SkyBlockProfilePlayerStats {
   skills: SkyBlockSkillGroupResponse | null
   slayers: SkyBlockSlayerGroupResponse | null
   dungeons: SkyBlockDungeonGroupResponse | null
+  coins: {
+    total: number
+    bank?: number | null
+    purse?: number | null
+  }
 }

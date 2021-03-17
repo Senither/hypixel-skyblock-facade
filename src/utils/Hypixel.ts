@@ -22,6 +22,11 @@ export function mergeSkyBlockProfileAndPlayer(profile: SkyBlockProfileStats, pla
     skills: profile.skills,
     slayers: profile.slayers,
     dungeons: profile.dungeons,
+    coins: {
+      total: (profile.coins?.bank || 0) + (profile.coins?.purse || 0),
+      bank: profile.coins?.bank,
+      purse: profile.coins?.purse,
+    },
   }
 }
 
@@ -96,6 +101,10 @@ export function parseSkyBlockProfiles(player: PlayerStats, profiles: AxiosRespon
       skills: SkillsGenerator.build(player, profile),
       slayers: SlayersGenerator.build(player, profile),
       dungeons: DungeonsGenerator.build(player, profile),
+      coins: {
+        bank: profileData.hasOwnProperty('banking') ? profileData.banking.balance : null,
+        purse: profile.coin_purse || null,
+      },
     })
   }
 
