@@ -2,6 +2,33 @@
 
 All notable changes to `hypixel-skyblock-facade` will be documented in this file.
 
+## v0.6.0
+
+- Added support for Tier 5 slayer bosses.
+- Added support for non-dashed UUIDs
+- Added coins and banking info to API responses
+- Fixed player achievements being null safe
+  - If a player didn't have any achievements the API would failed to preform the request and return a 500 error code, this is fixed now and instead just returns a 404 since the player has no SkyBlock data.
+- Updated the changelog(finally) so it matches the changes made to the project thus far.
+
+## v0.5.0
+
+- Added node cluster support
+  - This allows you to boot up multiple instances of the facade API all listening on the same port, so the API can handle more requests on servers with more CPU resources available.
+- Added dungeon secrets found to API responses.
+- Raised combat level cap to 60.
+- Fixed some API documentation grammar and spelling errors.
+
+## v0.4.0
+
+- Added support for loading skills using achievements if the player skills API is disabled.
+- Added some API references and feature messages to the API documentation.
+
+## v0.3.0
+
+- Rewrote the dungeon weight calculations.
+  - The rewrite changes the dungeon weight calculator to reward players at higher levels a lot more, and reduces points given to players at the lower levels, this change is also made so it matches the logic used in the https://github.com/senither/hypixel-skyblock-assistant project.
+
 ## v0.2.0
 
 - All requests now return the players username within the requests.
