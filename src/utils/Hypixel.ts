@@ -51,17 +51,17 @@ export function parseHypixelPlayer(player: AxiosResponse, uuid: string): PlayerS
     lastLogin: data.lastLogin,
     socialMedia: data.socialMedia,
     skyblockSkills: {
-      mining: achievements.skyblock_excavator || 0,
-      foraging: achievements.skyblock_gatherer || 0,
-      enchanting: achievements.skyblock_augmentation || 0,
-      farming: achievements.skyblock_harvester || 0,
-      combat: achievements.skyblock_combat || 0,
-      fishing: achievements.skyblock_angler || 0,
-      alchemy: achievements.skyblock_concoctor || 0,
-      taming: achievements.skyblock_domesticator || 0,
+      mining: achievements?.skyblock_excavator || 0,
+      foraging: achievements?.skyblock_gatherer || 0,
+      enchanting: achievements?.skyblock_augmentation || 0,
+      farming: achievements?.skyblock_harvester || 0,
+      combat: achievements?.skyblock_combat || 0,
+      fishing: achievements?.skyblock_angler || 0,
+      alchemy: achievements?.skyblock_concoctor || 0,
+      taming: achievements?.skyblock_domesticator || 0,
     },
     dungeons: {
-      secrets_found: achievements.skyblock_treasure_hunter || 0,
+      secrets_found: achievements?.skyblock_treasure_hunter || 0,
     },
   }
 }
