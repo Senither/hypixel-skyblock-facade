@@ -2,6 +2,11 @@
 
 All notable changes to `hypixel-skyblock-facade` will be documented in this file.
 
+## v0.7.0
+
+- Rewrite slayer overflow weight calculations
+  - All slayer overflow weight now reduces on a curve, on top of that rev and tara overflow has been nerfed by quite a bit, and sven got a slight buff until 50~ish mil XP where it falls below the weight prior to this change.
+
 ## v0.6.0
 
 - Added support for Tier 5 slayer bosses.

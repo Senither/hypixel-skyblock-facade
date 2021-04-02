@@ -1,7 +1,12 @@
 export default interface SlayerWeightGroup {
-  [name: string]: number
+  [name: string]: SlayerWeightGroupEntry
 
-  revenant: number
-  tarantula: number
-  sven: number
+  revenant: SlayerWeightGroupEntry
+  tarantula: SlayerWeightGroupEntry
+  sven: SlayerWeightGroupEntry
+}
+
+interface SlayerWeightGroupEntry {
+  divider: number
+  modifier: number
 }

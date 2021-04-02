@@ -12,9 +12,18 @@ class SlayersGenerator extends Generator {
    * @type object
    */
   private weights: SlayerWeightGroup = {
-    revenant: 2208,
-    tarantula: 2118,
-    sven: 1962,
+    revenant: {
+      divider: 2208,
+      modifier: 0.15,
+    },
+    tarantula: {
+      divider: 2118,
+      modifier: 0.08,
+    },
+    sven: {
+      divider: 1962,
+      modifier: 0.015,
+    },
   }
 
   build(_: PlayerStats, profile: SkyBlockProfile): SkyBlockSlayerGroupResponse | null {
@@ -123,18 +132,28 @@ class SlayersGenerator extends Generator {
    * @param experience The total amount of experience in the current slayer type
    */
   private calculateWeight(type: string, experience: number) {
-    const divider = this.weights[type]
+    const slayerWeight = this.weights[type]
 
     if (experience <= 1000000) {
       return {
-        weight: experience == 0 ? 0 : experience / divider,
+        weight: experience == 0 ? 0 : experience / slayerWeight.divider,
         weight_overflow: 0,
       }
     }
 
-    let base = 1000000 / divider
+    let base = 1000000 / slayerWeight.divider
     let remaining = experience - 1000000
-    let overflow = Math.pow(remaining / (divider * 1.5), 0.942)
+
+    let modifier = slayerWeight.modifier
+    let overflow = 0
+
+    while (remaining > 0) {
+      let left = Math.min(remaining, 1000000)
+
+      overflow += Math.pow(left / (slayerWeight.divider * (1.5 + modifier)), 0.942)
+      modifier += slayerWeight.modifier
+      remaining -= left
+    }
 
     return {
       weight: base,
