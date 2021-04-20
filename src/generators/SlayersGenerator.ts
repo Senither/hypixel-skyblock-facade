@@ -37,9 +37,9 @@ class SlayersGenerator extends Generator {
       weight: 0,
       weight_overflow: 0,
       bosses: {
-        revenant: this.generateSlayerStatsResponse('revenant', profile.slayer_bosses.zombie),
-        tarantula: this.generateSlayerStatsResponse('tarantula', profile.slayer_bosses.spider),
-        sven: this.generateSlayerStatsResponse('sven', profile.slayer_bosses.wolf),
+        revenant: this.generateSlayerStatsResponse('revenant', profile.slayer_bosses.zombie || null),
+        tarantula: this.generateSlayerStatsResponse('tarantula', profile.slayer_bosses.spider || null),
+        sven: this.generateSlayerStatsResponse('sven', profile.slayer_bosses.wolf || null),
       },
     }
 
@@ -90,7 +90,11 @@ class SlayersGenerator extends Generator {
    *
    * @param slayer The slayer object
    */
-  private generateSlayerStatsResponse(type: string, slayer: Slayer): object {
+  private generateSlayerStatsResponse(type: string, slayer?: Slayer): object {
+    if (slayer == null) {
+      slayer = {}
+    }
+
     const experience = slayer.xp || 0
 
     return {
