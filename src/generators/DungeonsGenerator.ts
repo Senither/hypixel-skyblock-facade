@@ -48,11 +48,11 @@ class DungeonsGenerator extends Generator {
       weight_overflow: 0,
       secrets_found: player.dungeons.secrets_found,
       classes: {
-        healer: this.generateClassProperties('healer', dungeonGroups.player_classes.healer),
-        mage: this.generateClassProperties('mage', dungeonGroups.player_classes.mage),
-        berserker: this.generateClassProperties('berserker', dungeonGroups.player_classes.berserk),
-        archer: this.generateClassProperties('archer', dungeonGroups.player_classes.archer),
-        tank: this.generateClassProperties('tank', dungeonGroups.player_classes.tank),
+        healer: this.generateClassProperties('healer', dungeonGroups.player_classes.healer || null),
+        mage: this.generateClassProperties('mage', dungeonGroups.player_classes.mage || null),
+        berserker: this.generateClassProperties('berserker', dungeonGroups.player_classes.berserk || null),
+        archer: this.generateClassProperties('archer', dungeonGroups.player_classes.archer || null),
+        tank: this.generateClassProperties('tank', dungeonGroups.player_classes.tank || null),
       },
       types: {
         catacombs: this.buildDungeonTypeProperties('catacombs', dungeonGroups.dungeon_types.catacombs),
@@ -191,7 +191,11 @@ class DungeonsGenerator extends Generator {
    * @param type The dungeon class type
    * @param playerClass The player class that should be generated
    */
-  private generateClassProperties(type: string, playerClass: PlayerClassExperience) {
+  private generateClassProperties(type: string, playerClass?: PlayerClassExperience) {
+    if (playerClass == null) {
+      playerClass = {}
+    }
+
     const experience = playerClass.experience || 0
     const level = this.calculateLevel(experience)
 

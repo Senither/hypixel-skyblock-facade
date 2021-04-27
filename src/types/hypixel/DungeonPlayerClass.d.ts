@@ -9,5 +9,5 @@ export default interface DungeonPlayerClass {
 }
 
 interface PlayerClassExperience {
-  experience: number
+  experience?: number
 }
