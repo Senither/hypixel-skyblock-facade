@@ -5,3 +5,6 @@ logs/
 # TypeScript
 build/
 *.tsbuildinfo
+
+# Mic
+TODO
