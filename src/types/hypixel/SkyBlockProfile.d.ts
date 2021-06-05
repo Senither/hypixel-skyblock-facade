@@ -1,5 +1,6 @@
 import DungeonGroups from './DungeonGroups'
 import SlayerBosses from './SlayerBosses'
+import PetGroups from './PetGroups'
 
 export default interface SkyBlockProfile {
   last_save: number
@@ -19,6 +20,8 @@ export default interface SkyBlockProfile {
   slayer_bosses?: SlayerBosses
 
   dungeons?: DungeonGroups
+
+  pets?: PetGroups[]
 
   coin_purse?: number
 }

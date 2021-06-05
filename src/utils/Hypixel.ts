@@ -3,6 +3,7 @@ import HttpException from '../exceptions/HttpException'
 import DungeonsGenerator from '../generators/DungeonsGenerator'
 import SkillsGenerator from '../generators/SkillsGenerator'
 import SlayersGenerator from '../generators/SlayersGenerator'
+import PetsGenerator from '../generators/PetsGenerator'
 import { PlayerStats, SkyBlockProfile, SkyBlockProfileMembersResponse, SkyBlockProfilePlayerStats, SkyBlockProfileStats } from '../types/hypixel'
 
 /**
@@ -22,6 +23,7 @@ export function mergeSkyBlockProfileAndPlayer(profile: SkyBlockProfileStats, pla
     skills: profile.skills,
     slayers: profile.slayers,
     dungeons: profile.dungeons,
+    pets: profile.pets,
     coins: {
       total: (profile.coins?.bank || 0) + (profile.coins?.purse || 0),
       bank: profile.coins?.bank,
@@ -101,6 +103,7 @@ export function parseSkyBlockProfiles(player: PlayerStats, profiles: AxiosRespon
       skills: SkillsGenerator.build(player, profile),
       slayers: SlayersGenerator.build(player, profile),
       dungeons: DungeonsGenerator.build(player, profile),
+      pets: PetsGenerator.build(player, profile),
       coins: {
         bank: profileData.hasOwnProperty('banking') ? profileData.banking.balance : null,
         purse: profile.coin_purse || null,

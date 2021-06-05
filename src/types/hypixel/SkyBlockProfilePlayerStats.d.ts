@@ -1,4 +1,4 @@
-import { SkyBlockDungeonGroupResponse, SkyBlockSkillGroupResponse, SkyBlockSlayerGroupResponse } from './SkyBlockProfileStats'
+import { Pets, SkyBlockDungeonGroupResponse, SkyBlockSkillGroupResponse, SkyBlockSlayerGroupResponse } from './SkyBlockProfileStats'
 
 export default interface SkyBlockProfilePlayerStats {
   id: string
@@ -13,6 +13,7 @@ export default interface SkyBlockProfilePlayerStats {
   skills: SkyBlockSkillGroupResponse | null
   slayers: SkyBlockSlayerGroupResponse | null
   dungeons: SkyBlockDungeonGroupResponse | null
+  pets: Pets[] | null
   coins: {
     total: number
     bank?: number | null

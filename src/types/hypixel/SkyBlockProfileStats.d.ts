@@ -1,3 +1,5 @@
+import { PetItem } from './PetItems'
+
 export default interface SkyBlockProfileStats {
   id: string
   name: string
@@ -10,6 +12,7 @@ export default interface SkyBlockProfileStats {
   skills: SkyBlockSkillGroupResponse | null
   slayers: SkyBlockSlayerGroupResponse | null
   dungeons: SkyBlockDungeonGroupResponse | null
+  pets: Pets[] | null
   coins: Banking | null
 }
 
@@ -138,6 +141,15 @@ interface SkyBlockDungeonTimeGroupResponse {
 interface SkyBlockDungeonTimesResponse {
   time: string
   seconds: number
+}
+
+interface Pets {
+  type: string
+  tier: string
+  level: number
+  xp: number
+  heldItem: PetItem | string | null
+  active: boolean
 }
 
 interface Banking {

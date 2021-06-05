@@ -17,3 +17,7 @@ export { default as DungeonWeightGroup } from './weight/DungeonWeightGroup'
 export { default as PlayerStats } from './PlayerStats'
 export { default as SkyBlockProfileStats } from './SkyBlockProfileStats'
 export { default as SkyBlockProfilePlayerStats } from './SkyBlockProfilePlayerStats'
+
+export { default as PetGroups } from './PetGroups'
+export { PetItem as PetItem } from './PetItems'
+export { PetItemGroup as PetItemGroup } from './PetItems'
