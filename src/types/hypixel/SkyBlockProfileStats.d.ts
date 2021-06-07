@@ -48,6 +48,7 @@ interface SkyBlockSlayerGroupResponse {
     revenant: SkyBlockSlayerStatsResponse
     tarantula: SkyBlockSlayerStatsResponse
     sven: SkyBlockSlayerStatsResponse
+    enderman: SkyBlockSlayerStatsResponse
   }
 }
 

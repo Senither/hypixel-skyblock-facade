@@ -4,6 +4,7 @@ export default interface SlayerWeightGroup {
   revenant: SlayerWeightGroupEntry
   tarantula: SlayerWeightGroupEntry
   sven: SlayerWeightGroupEntry
+  enderman: SlayerWeightGroupEntry
 }
 
 interface SlayerWeightGroupEntry {

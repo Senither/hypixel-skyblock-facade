@@ -24,6 +24,10 @@ class SlayersGenerator extends Generator {
       divider: 1962,
       modifier: 0.015,
     },
+    enderman: {
+      divider: Number.POSITIVE_INFINITY,
+      modifier: Number.POSITIVE_INFINITY,
+    }
   }
 
   build(_: PlayerStats, profile: SkyBlockProfile): SkyBlockSlayerGroupResponse | null {
@@ -40,6 +44,7 @@ class SlayersGenerator extends Generator {
         revenant: this.generateSlayerStatsResponse('revenant', profile.slayer_bosses.zombie || null),
         tarantula: this.generateSlayerStatsResponse('tarantula', profile.slayer_bosses.spider || null),
         sven: this.generateSlayerStatsResponse('sven', profile.slayer_bosses.wolf || null),
+        enderman: this.generateSlayerStatsResponse('enderman', profile.slayer_bosses.enderman || null),
       },
     }
 
