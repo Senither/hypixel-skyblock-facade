@@ -4,6 +4,8 @@ A simple to use, stateless API facade for communicating with the Hypixel API, bu
 
 This API acts as a facade to the real Hypixel API, its purpose is to make it easier to get skills, slayers, and dungeon information about profiles without the need to calculate each level yourself, and to make it easier to select a players profile based on different strategies.
 
+> If you're not looking for a web API but still want a weight calculator you can checkout [LappySheep/hypixel-skyblock-weight](https://github.com/LappySheep/hypixel-skyblock-weight) for a different take on the weight calculation.
+
 ## Table of Content
 
 * [Installation using NodeJS](#installation-using-nodejs)
