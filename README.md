@@ -4,30 +4,28 @@ A simple to use, stateless API facade for communicating with the Hypixel API, bu
 
 This API acts as a facade to the real Hypixel API, its purpose is to make it easier to get skills, slayers, and dungeon information about profiles without the need to calculate each level yourself, and to make it easier to select a players profile based on different strategies.
 
-> This application is still in the very early stages of development, use it at your own risk, if you have an interest in helping in the development of the project, feel free to checkout the [contribution guidelines](CONTRIBUTING.md).
-
 ## Table of Content
 
-- [Installation using NodeJS](#installation-using-nodejs)
-  - [Prerequisites](#prerequisites)
-  - [Setup Guide](#setup-guide)
-- [Installation using Docker](#installation-using-docker)
-  - [Prerequisites](#prerequisites-1)
-  - [Setup Guide](#setup-guide-1)
-- [Deploy directly to DigitalOcean](#deploy-directly-to-digitalocean)
-  - [Prerequisites](#prerequisites-2)
-  - [Setup Guide](#setup-guide-2)
-- [Environment Variables](#environment-variables)
-- [Usage](#usage)
-- [Changelog](#changelog)
-- [Contributing](#contributing)
-- [License](#License)
+* [Installation using NodeJS](#installation-using-nodejs)
+  + [Prerequisites](#prerequisites)
+  + [Setup Guide](#setup-guide)
+* [Installation using Docker](#installation-using-docker)
+  + [Prerequisites](#prerequisites-1)
+  + [Setup Guide](#setup-guide-1)
+* [Deploy directly to DigitalOcean](#deploy-directly-to-digitalocean)
+  + [Prerequisites](#prerequisites-2)
+  + [Setup Guide](#setup-guide-2)
+* [Environment Variables](#environment-variables)
+* [Usage](#usage)
+* [Changelog](#changelog)
+* [Contributing](#contributing)
+* [License](#License)
 
 ## Installation using NodeJS
 
 ### Prerequisites
 
-- NodeJS >= 14
+* NodeJS >= 14
 
 ### Setup Guide
 
@@ -47,13 +45,13 @@ When all the dependencies have been installed you're can now ready to launch the
 
     npm start
 
-You can also launch the site in watch mode using `yarn watch` or `npm run-script watch`, which makes development a lot easier since the entire app is reloaded anytime code changes are made.
+You can also launch the site in watch mode using `yarn watch` or `npm run-script watch` , which makes development a lot easier since the entire app is reloaded anytime code changes are made.
 
 ## Installation using Docker
 
 ### Prerequisites
 
-- Docker >= 20
+* Docker >= 20
 
 _Older versions may also work, but have not been tested._
 
@@ -63,7 +61,7 @@ Running the API via Docker is made easy using [Docker Hub](https://hub.docker.co
 
     docker run -d -p 9281:9281 --rm senither/hypixel-skyblock-facade
 
-And you're done! The command will start a detached instance of the API listening on port `9281`, and ensure that the container is deleted after you're done using it.
+And you're done! The command will start a detached instance of the API listening on port `9281` , and ensure that the container is deleted after you're done using it.
 
 > The command will launch the API with the `latest` tag, if you want to run a different version of the API you'll have to specify it at the end of the image name, checkout the [Docker Hub Repository](https://hub.docker.com/r/senither/hypixel-skyblock-facade) to see the versions available.
 >
@@ -97,13 +95,13 @@ Click the button below to deploy the app to the DigitalOcean App Platform, from 
 
 ### Port
 
-**Defaults to `9281`**
+**Defaults to `9281` **
 
 The `PORT` environment variable determines what port the API is running on, you can change this to any open port on your system you want the API to run on instead.
 
 ### Environment
 
-**Defaults to `dev`**
+**Defaults to `dev` **
 
 The `ENVIRONMENT` environment variable determines what environment the application is running in, if it is not `prod` or `production` it will assume the environment is a dev environment, when the application runs in a dev environment it will produce stack traces to errors that happens in the API.
 
@@ -118,7 +116,7 @@ The API supports authenticating using a `?key=token` query parameter, or by pass
     curl --location --request GET 'https://hypixel-api.senither.com/v1/profiles/18e174ef-078f-4275-8dcd-51d495d1096b' \
          --header 'Authorization: your-hypixel-api-token-goes-here'
 
-The example above would send a request to the API to get all the profiles for the player with an UUID of `18e174ef-078f-4275-8dcd-51d495d1096b`.
+The example above would send a request to the API to get all the profiles for the player with an UUID of `18e174ef-078f-4275-8dcd-51d495d1096b` .
 
 A request could also be made to get a single profile for a user using some strategy, like selecting a profile by profile weight, highest skills, slayers, catacombs, or just selecting the profile that was last used.
 
@@ -127,7 +125,7 @@ A request could also be made to get a single profile for a user using some strat
     curl --location --request GET 'https://hypixel-api.senither.com/v1/profiles/18e174ef-078f-4275-8dcd-51d495d1096b/weight' \
          --header 'Authorization: your-hypixel-api-token-goes-here'
 
-The example above, like the previous example, will load profiles for the player with an UUID of `18e174ef-078f-4275-8dcd-51d495d1096b`, but we have selected the `weight` strategy, which means the API will only return the profile with the highest weight out of all of the players profiles.
+The example above, like the previous example, will load profiles for the player with an UUID of `18e174ef-078f-4275-8dcd-51d495d1096b` , but we have selected the `weight` strategy, which means the API will only return the profile with the highest weight out of all of the players profiles.
 
 > For more information about the strategies available, and how to use them, check out the documentation for the APIs homepage.
 >
