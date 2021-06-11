@@ -2,6 +2,11 @@
 
 All notable changes to `hypixel-skyblock-facade` will be documented in this file.
 
+## v0.9.0
+
+* Added enderman slayer with weight support.
+* Added response examples to the documentation.
+
 ## v0.8.0
 
 * Add support for getting pets via the API

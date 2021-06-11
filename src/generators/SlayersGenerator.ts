@@ -25,8 +25,8 @@ class SlayersGenerator extends Generator {
       modifier: 0.015,
     },
     enderman: {
-      divider: Number.POSITIVE_INFINITY,
-      modifier: Number.POSITIVE_INFINITY,
+      divider: 1430,
+      modifier: .017,
     }
   }
 
