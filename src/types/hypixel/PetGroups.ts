@@ -3,5 +3,6 @@ export default interface PetGroups {
     exp: number
     active: boolean
     tier: string
+    candyUsed: number
     heldItem: string,
 }
