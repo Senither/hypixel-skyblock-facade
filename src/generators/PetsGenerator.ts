@@ -35,6 +35,7 @@ class PetsGenerator extends Generator {
                 level: this.calculateSkillLevel(pet),
                 xp: pet.exp,
                 heldItem: item,
+                candyUsed: pet.candyUsed,
                 active: pet.active,
             })
         }
