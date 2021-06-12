@@ -150,6 +150,7 @@ interface Pets {
   level: number
   xp: number
   heldItem: PetItem | string | null
+  candyUsed: number
   active: boolean
 }
 
