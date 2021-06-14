@@ -8,7 +8,7 @@ export default interface SkyBlockProfilePlayerStats {
     time: number
     date: Date
   }
-  fairy_souls_collected: number
+  fairy_souls: number
   weight: number
   weight_overflow: number
   skills: SkyBlockSkillGroupResponse | null
