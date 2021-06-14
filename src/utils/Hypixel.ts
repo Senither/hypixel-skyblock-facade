@@ -18,6 +18,7 @@ export function mergeSkyBlockProfileAndPlayer(profile: SkyBlockProfileStats, pla
     name: profile.name,
     username: player.username,
     last_save_at: profile.last_save_at,
+    fairy_souls: profile.fairy_souls,
     weight: profile.weight,
     weight_overflow: profile.weight_overflow,
     skills: profile.skills,
@@ -70,7 +71,7 @@ export function parseHypixelPlayer(player: AxiosResponse, uuid: string): PlayerS
 
 /**
  * Parses and formats the SkyBlock profiles into a more user-friendly format
- * with only the skills, slayers, dungeon, and weight information.
+ * with only the skills, slayers, dungeon, pets, and weight information.
  *
  * @param player The general Hypixel player stats
  * @param profiles A SkyBlock profiles response object
@@ -98,6 +99,7 @@ export function parseSkyBlockProfiles(player: PlayerStats, profiles: AxiosRespon
         time: profile.last_save,
         date: new Date(profile.last_save),
       },
+      fairy_souls: profile.fairy_souls_collected,
       weight: 0,
       weight_overflow: 0,
       skills: SkillsGenerator.build(player, profile),
