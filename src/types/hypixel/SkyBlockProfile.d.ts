@@ -5,8 +5,9 @@ import PetGroups from './PetGroups'
 export default interface SkyBlockProfile {
   last_save: number
   first_join: number
+
   fairy_souls_collected: number
-  
+
   experience_skill_mining?: number
   experience_skill_foraging?: number
   experience_skill_enchanting?: number
