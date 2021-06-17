@@ -232,6 +232,22 @@ curl -X GET 'https://hypixel-api.senither.com/v1/hello' \
             <div>
               <h4 class="mb-4 text-xl font-semibold tracking-wide">
                 <span class="py-2 px-3 mr-2 text-base bg-indigo-500 rounded-md">GET</span>
+                /v1/stats
+              </h4>
+              <p>
+                Get some stats about the API, like the current uptime both in seconds and as a human readable string,
+                and how many requests the API have handled in the last minute, hour, and since it was last restarted.
+              </p>
+
+              <p class="py-4 font-bold">Example</p>
+              <pre class="py-3 px-6 bg-gray-900 rounded-md shadow-md overflow-auto">
+curl -X GET 'https://hypixel-api.senither.com/v1/stats' \
+     -H 'Authorization: your-hypixel-api-token'</pre>
+            </div>
+
+            <div>
+              <h4 class="mb-4 text-xl font-semibold tracking-wide">
+                <span class="py-2 px-3 mr-2 text-base bg-indigo-500 rounded-md">GET</span>
                 /v1/profiles/<span class="text-indigo-400">:uuid</span>
               </h4>
               <p>Gets every profile a user has as a list, where each profile have had its levels and stats calculated.

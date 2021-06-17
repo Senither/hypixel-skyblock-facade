@@ -2,6 +2,13 @@
 
 All notable changes to `hypixel-skyblock-facade` will be documented in this file.
 
+## v0.10.0
+
+* Created /v1/stats route
+  + The route displays the application uptime, and the amount of request it has handled in the last minute, hour, and since it was last rebooted, it should help give a bit of insight into how much the API is actually being used, and when the API is being used the most.
+* Added fairy souls, provided by [@Calvahar](https://github.com/Calvahar)
+* Added used pet candy, provided by [@Calvahar](https://github.com/Calvahar)
+
 ## v0.9.0
 
 * Added enderman slayer with weight support.

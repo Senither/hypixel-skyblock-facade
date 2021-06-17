@@ -7,9 +7,12 @@ import cluster from 'cluster'
 import NotFound from './middleware/NotFound'
 import ErrorHandler from './middleware/ErrorHandler'
 import AuthIsPresent from './middleware/AuthIsPresent'
+import RegisterMetrics from './middleware/RegisterMetrics'
 import HelloRoute from './routes/v1/Hello'
+import GetStatsRoute from './routes/v1/GetStats'
 import GetProfiles from './routes/v1/GetProfiles'
 import GetProfileWithStrategy from './routes/v1/GetProfileWithStrategy'
+import { MetricsManager, MetricsWorker } from './metrics'
 
 export default class Application {
   /**
@@ -44,6 +47,8 @@ export default class Application {
 
       cluster.fork()
     })
+
+    MetricsManager.bootstrapMetrics()
   }
 
   /**
@@ -60,15 +65,19 @@ export default class Application {
     this.server.use(express.static(path.join(__dirname, 'public')))
 
     this.server.use(cors())
+    this.server.use(RegisterMetrics)
     this.server.use(AuthIsPresent)
     this.server.use(express.json())
 
     this.server.get('/v1/hello', HelloRoute)
+    this.server.get('/v1/stats', GetStatsRoute)
     this.server.get('/v1/profiles/:uuid', GetProfiles)
     this.server.get('/v1/profiles/:uuid/:strategy', GetProfileWithStrategy)
 
     this.server.use(NotFound)
     this.server.use(ErrorHandler)
+
+    MetricsWorker.registerListener()
   }
 
   /**
