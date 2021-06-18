@@ -1,7 +1,7 @@
 {
   "private": true,
   "name": "hypixel-skyblock-facade",
-  "version": "0.9.2",
+  "version": "0.10.1",
   "description": "A stateless API facade for the Hypixel SkyBlock API",
   "license": "MIT",
   "scripts": {
