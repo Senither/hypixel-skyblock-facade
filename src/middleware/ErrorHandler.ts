@@ -27,6 +27,7 @@ export default (error: any, _: Request, response: Response, __: any) => {
         return createJsonResponse(response, 502, 'Hypixels API is currently experiencing some technical issues, try again later')
 
       case 503:
+      case 521:
         return createJsonResponse(response, 503, 'Hypixels API is currently in maintenance mode, try again later')
     }
   }
