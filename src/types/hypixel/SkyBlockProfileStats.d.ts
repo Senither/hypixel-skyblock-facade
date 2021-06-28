@@ -78,20 +78,32 @@ interface SkyBlockDungeonGroupResponse {
     tank: SkyBlockDungeonPlayerClassResponse
   }
   types: {
-    catacombs: {
-      level: number
-      experience: number
-      weight: number
-      weight_overflow: number
-      highest_tier_completed: number
-      times_played: SkyBlockDungeonStatsGroupResponse
-      tier_completions: SkyBlockDungeonStatsGroupResponse
-      best_score: SkyBlockDungeonScoreGroupResponse
-      fastest_time: SkyBlockDungeonTimeGroupResponse
-      fastest_time_s_plus: SkyBlockDungeonTimeGroupResponse
-      mobs_killed: SkyBlockDungeonStatsGroupResponse
-      most_mobs_killed: SkyBlockDungeonStatsGroupResponse
-    }
+    catacombs: SkyBlockDungeonGroupEntryResponse
+  }
+}
+
+interface SkyBlockDungeonGroupEntryResponse {
+  level: number
+  experience: number
+  weight: number
+  weight_overflow: number
+  highest_tier_completed: number
+  times_played: SkyBlockDungeonStatsGroupResponse
+  tier_completions: SkyBlockDungeonStatsGroupResponse
+  best_score: SkyBlockDungeonScoreGroupResponse
+  fastest_time: SkyBlockDungeonTimeGroupResponse
+  fastest_time_s_plus: SkyBlockDungeonTimeGroupResponse
+  mobs_killed: SkyBlockDungeonStatsGroupResponse
+  most_mobs_killed: SkyBlockDungeonStatsGroupResponse
+
+  master_mode: {
+    highest_tier_completed: number
+    tier_completions: SkyBlockDungeonStatsGroupResponse
+    best_score: SkyBlockDungeonScoreGroupResponse
+    fastest_time: SkyBlockDungeonTimeGroupResponse
+    fastest_time_s_plus: SkyBlockDungeonTimeGroupResponse
+    mobs_killed: SkyBlockDungeonStatsGroupResponse
+    most_mobs_killed: SkyBlockDungeonStatsGroupResponse
   }
 }
 

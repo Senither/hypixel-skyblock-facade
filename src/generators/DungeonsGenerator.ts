@@ -55,7 +55,11 @@ class DungeonsGenerator extends Generator {
         tank: this.generateClassProperties('tank', dungeonGroups.player_classes.tank || null),
       },
       types: {
-        catacombs: this.buildDungeonTypeProperties('catacombs', dungeonGroups.dungeon_types.catacombs),
+        catacombs: this.buildDungeonTypeProperties(
+          'catacombs',
+          dungeonGroups.dungeon_types.catacombs,
+          dungeonGroups.dungeon_types.master_catacombs
+        ),
       },
     }
 
@@ -88,8 +92,9 @@ class DungeonsGenerator extends Generator {
    *
    * @param type The dungeon type the properties should be built with
    * @param dungeon The dungeon that the properties should be built for
+   * @param masterDungeon The master version of the dungeon properties that should be built for
    */
-  private buildDungeonTypeProperties(type: string, dungeon: Dungeon) {
+  private buildDungeonTypeProperties(type: string, dungeon: Dungeon, masterDungeon: Dungeon) {
     const level = this.calculateLevel(dungeon.experience)
 
     const dungeonResult = {
@@ -104,6 +109,16 @@ class DungeonsGenerator extends Generator {
       fastest_time_s_plus: this.formatDungeonStatsGroup(dungeon.fastest_time_s_plus),
       mobs_killed: this.formatDungeonStatsGroup(dungeon.mobs_killed),
       most_mobs_killed: this.formatDungeonStatsGroup(dungeon.most_mobs_killed),
+
+      master_mode: {
+        highest_tier_completed: masterDungeon.highest_tier_completed,
+        tier_completions: this.formatDungeonStatsGroup(masterDungeon.tier_completions),
+        best_score: this.formatDungeonStatsGroup(masterDungeon.best_score),
+        fastest_time: this.formatDungeonStatsGroup(masterDungeon.fastest_time),
+        fastest_time_s_plus: this.formatDungeonStatsGroup(masterDungeon.fastest_time_s_plus),
+        mobs_killed: this.formatDungeonStatsGroup(masterDungeon.mobs_killed),
+        most_mobs_killed: this.formatDungeonStatsGroup(masterDungeon.most_mobs_killed),
+      }
     }
 
     dungeonResult.best_score = this.formatDungeonScores(dungeonResult.best_score)

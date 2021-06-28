@@ -2,6 +2,12 @@
 
 All notable changes to `hypixel-skyblock-facade` will be documented in this file.
 
+## v0.11.0
+
+* Added support for master mode in catacombs responses.
+* Added 521 error code handler.
+* Added missing LICENSE file.
+
 ## v0.10.0
 
 * Created /v1/stats route
