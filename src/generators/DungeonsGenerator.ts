@@ -125,6 +125,10 @@ class DungeonsGenerator extends Generator {
     dungeonResult.fastest_time = this.formatDungeonsTime(dungeonResult.fastest_time)
     dungeonResult.fastest_time_s_plus = this.formatDungeonsTime(dungeonResult.fastest_time_s_plus)
 
+    dungeonResult.master_mode.best_score = this.formatDungeonScores(dungeonResult.master_mode.best_score)
+    dungeonResult.master_mode.fastest_time = this.formatDungeonsTime(dungeonResult.master_mode.fastest_time)
+    dungeonResult.master_mode.fastest_time_s_plus = this.formatDungeonsTime(dungeonResult.master_mode.fastest_time_s_plus)
+
     return dungeonResult
   }
 
