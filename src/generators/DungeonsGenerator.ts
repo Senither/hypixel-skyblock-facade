@@ -111,13 +111,13 @@ class DungeonsGenerator extends Generator {
       most_mobs_killed: this.formatDungeonStatsGroup(dungeon.most_mobs_killed),
 
       master_mode: {
-        highest_tier_completed: masterDungeon.highest_tier_completed,
-        tier_completions: this.formatDungeonStatsGroup(masterDungeon.tier_completions),
-        best_score: this.formatDungeonStatsGroup(masterDungeon.best_score),
-        fastest_time: this.formatDungeonStatsGroup(masterDungeon.fastest_time),
-        fastest_time_s_plus: this.formatDungeonStatsGroup(masterDungeon.fastest_time_s_plus),
-        mobs_killed: this.formatDungeonStatsGroup(masterDungeon.mobs_killed),
-        most_mobs_killed: this.formatDungeonStatsGroup(masterDungeon.most_mobs_killed),
+        highest_tier_completed: masterDungeon?.highest_tier_completed || 0,
+        tier_completions: this.formatDungeonStatsGroup(masterDungeon?.tier_completions),
+        best_score: this.formatDungeonStatsGroup(masterDungeon?.best_score),
+        fastest_time: this.formatDungeonStatsGroup(masterDungeon?.fastest_time),
+        fastest_time_s_plus: this.formatDungeonStatsGroup(masterDungeon?.fastest_time_s_plus),
+        mobs_killed: this.formatDungeonStatsGroup(masterDungeon?.mobs_killed),
+        most_mobs_killed: this.formatDungeonStatsGroup(masterDungeon?.most_mobs_killed),
       }
     }
 
