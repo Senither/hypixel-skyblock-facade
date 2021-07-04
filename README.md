@@ -17,6 +17,9 @@ This API acts as a facade to the real Hypixel API, its purpose is to make it eas
 * [Deploy directly to DigitalOcean](#deploy-directly-to-digitalocean)
   + [Prerequisites](#prerequisites-2)
   + [Setup Guide](#setup-guide-2)
+* [Deploy directly to Replit](#deploy-directly-to-replit)
+  + [Prerequisites](#prerequisites-3)
+  + [Setup Guide](#setup-guide-3)
 * [Environment Variables](#environment-variables)
 * [Usage](#usage)
 * [Changelog](#changelog)
@@ -92,6 +95,20 @@ Referral link: https://m.do.co/c/9f589c4101c3
 Click the button below to deploy the app to the DigitalOcean App Platform, from there just follow the setup instructions, and once the application have been built and deployed to the DigitalOcean App Platform you'll get a URL where you can access the API.
 
 [![Deploy to DO](https://www.deploytodo.com/do-btn-blue.svg)](https://cloud.digitalocean.com/apps/new?repo=https://github.com/Senither/hypixel-skyblock-facade/tree/master)
+
+## Deploy directly to Replit
+
+### Prerequisites
+
+You'll need a GitHub account to deploy directly to Replit, as well as a [Replit](https://replit.com/) account that is linked with your GitHub account, if you don't already have a [Replit](https://replit.com/) account you can simply sign in with your GitHub account directly.
+
+### Setup Guide
+
+1. First [fork this project](https://github.com/Senither/hypixel-skyblock-facade/fork) onto your own GitHub account, once you have a copy of the project on your own account, sign in to Replit and import the project into Replit.
+2. Now that the project is imported you should be able to click on the project in the Replit dashboard to create a new project from it, when the project has been created you should be able to select some settings about the project, make sure the selected language is set to `TypeScript`, you can leave the _"configure the run button"_ settings as the default.
+3. The project is now configured to run the project, however Replit by default installs NodeJS 10, and the project requires 14+, however, we can easily change the project target Node version to support Node v10 by opening the `tsconfig.json` file inside the Replit editor, then changing the _"target"_ and _"lib"_ values from `es2020` to say `es2018` instead.
+4. Lastly you'll need to install all the dependencies for the project, this can be done by selecting the _"Shell"_ tab which should open the shell command prompt, then in that write `yarn install` to install all the dependencies.
+5. Now that the dependencies are installed that TypeScript has been setup to target NodeJS v10 you're now ready to start the project, just click on the big _"Run"_ button at the top of the screen, and wait for the project to be built and booted up, after the project is up and running you should see a vanity URL that you can use to access your own version of the API.
 
 ## Environment Variables
 
