@@ -27,6 +27,10 @@ class SlayersGenerator extends Generator {
     enderman: {
       divider: 1430,
       modifier: .017,
+    },
+    blaze: {
+      divider: 1872,
+      modifier: .023,
     }
   }
 
@@ -45,6 +49,7 @@ class SlayersGenerator extends Generator {
         tarantula: this.generateSlayerStatsResponse('tarantula', profile.slayer_bosses.spider || null),
         sven: this.generateSlayerStatsResponse('sven', profile.slayer_bosses.wolf || null),
         enderman: this.generateSlayerStatsResponse('enderman', profile.slayer_bosses.enderman || null),
+        blaze: this.generateSlayerStatsResponse('blaze', profile.slayer_bosses.blaze || null),
       },
     }
 
