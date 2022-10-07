@@ -3,7 +3,6 @@ import SlayerBosses from './SlayerBosses'
 import PetGroups from './PetGroups'
 
 export default interface SkyBlockProfile {
-  last_save: number
   first_join: number
 
   fairy_souls_collected: number
