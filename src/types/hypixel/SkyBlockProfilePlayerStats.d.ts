@@ -4,10 +4,7 @@ export default interface SkyBlockProfilePlayerStats {
   id: string
   name: string
   username: string
-  last_save_at: {
-    time: number
-    date: Date
-  }
+  selected: boolean
   weight: number
   weight_overflow: number
   fairy_souls: number

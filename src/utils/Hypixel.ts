@@ -17,7 +17,7 @@ export function mergeSkyBlockProfileAndPlayer(profile: SkyBlockProfileStats, pla
     id: profile.id,
     name: profile.name,
     username: player.username,
-    last_save_at: profile.last_save_at,
+    selected: profile.selected,
     weight: profile.weight,
     weight_overflow: profile.weight_overflow,
     fairy_souls: profile.fairy_souls,
@@ -95,10 +95,7 @@ export function parseSkyBlockProfiles(player: PlayerStats, profiles: AxiosRespon
     result.push({
       id: profileData.profile_id,
       name: profileData.cute_name,
-      last_save_at: {
-        time: profile.last_save,
-        date: new Date(profile.last_save),
-      },
+      selected: profileData.selected,
       weight: 0,
       weight_overflow: 0,
       fairy_souls: profile.fairy_souls_collected,
@@ -136,7 +133,7 @@ export function parseSkyBlockProfiles(player: PlayerStats, profiles: AxiosRespon
  * @param minifiedUuid The minified UUID for the player
  */
 function isValidProfile(profileMembers: SkyBlockProfileMembersResponse, minifiedUuid: string) {
-  return profileMembers.hasOwnProperty(minifiedUuid) && profileMembers[minifiedUuid].last_save != undefined
+  return profileMembers.hasOwnProperty(minifiedUuid) && profileMembers[minifiedUuid].pets != undefined
 }
 
 /**
