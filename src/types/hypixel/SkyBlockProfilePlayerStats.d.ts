@@ -5,6 +5,7 @@ export default interface SkyBlockProfilePlayerStats {
   name: string
   username: string
   selected: boolean
+  level: number
   weight: number
   weight_overflow: number
   fairy_souls: number

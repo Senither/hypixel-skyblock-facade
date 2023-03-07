@@ -4,6 +4,7 @@ export default interface SkyBlockProfileStats {
   id: string
   name: string
   selected: boolean
+  level: number
   weight: number
   weight_overflow: number
   fairy_souls: number
