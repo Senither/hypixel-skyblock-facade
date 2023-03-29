@@ -28,7 +28,7 @@ export default asyncWrap(async (request: Request, response: Response) => {
     case 'last_saved':
     case 'last_save_at':
       profile = selectProfile(profiles, (profile: SkyBlockProfileStats) => {
-        return profile.last_save_at.time
+        return profile.selected
       })
       break
 

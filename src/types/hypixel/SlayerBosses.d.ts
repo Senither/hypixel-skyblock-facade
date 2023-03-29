@@ -6,4 +6,6 @@ export default interface SlayerBosses {
   zombie: Slayer
   spider: Slayer
   wolf: Slayer
+  enderman: Slayer
+  blaze: Slayer
 }

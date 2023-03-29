@@ -17,7 +17,8 @@ export function mergeSkyBlockProfileAndPlayer(profile: SkyBlockProfileStats, pla
     id: profile.id,
     name: profile.name,
     username: player.username,
-    last_save_at: profile.last_save_at,
+    selected: profile.selected,
+    level: profile.level,
     weight: profile.weight,
     weight_overflow: profile.weight_overflow,
     fairy_souls: profile.fairy_souls,
@@ -91,14 +92,13 @@ export function parseSkyBlockProfiles(player: PlayerStats, profiles: AxiosRespon
     }
 
     const profile: SkyBlockProfile = profileData.members[minifiedUuid]
+    console.log(profile.leveling?.experience);
 
     result.push({
       id: profileData.profile_id,
       name: profileData.cute_name,
-      last_save_at: {
-        time: profile.last_save,
-        date: new Date(profile.last_save),
-      },
+      selected: profileData.selected,
+      level: profile.leveling?.experience || 0,
       weight: 0,
       weight_overflow: 0,
       fairy_souls: profile.fairy_souls_collected,
@@ -123,6 +123,7 @@ export function parseSkyBlockProfiles(player: PlayerStats, profiles: AxiosRespon
   for (let stats of result) {
     stats.weight = sumWeight(stats, 'weight')
     stats.weight_overflow = sumWeight(stats, 'weight_overflow')
+    stats.level = stats.level / 100
   }
 
   return result
@@ -136,7 +137,7 @@ export function parseSkyBlockProfiles(player: PlayerStats, profiles: AxiosRespon
  * @param minifiedUuid The minified UUID for the player
  */
 function isValidProfile(profileMembers: SkyBlockProfileMembersResponse, minifiedUuid: string) {
-  return profileMembers.hasOwnProperty(minifiedUuid) && profileMembers[minifiedUuid].last_save != undefined
+  return profileMembers.hasOwnProperty(minifiedUuid) && profileMembers[minifiedUuid].pets != undefined
 }
 
 /**

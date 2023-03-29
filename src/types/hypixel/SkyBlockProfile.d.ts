@@ -1,12 +1,13 @@
 import DungeonGroups from './DungeonGroups'
 import SlayerBosses from './SlayerBosses'
 import PetGroups from './PetGroups'
+import Leveling from './Leveing'
 
 export default interface SkyBlockProfile {
-  last_save: number
   first_join: number
 
   fairy_souls_collected: number
+
 
   experience_skill_mining?: number
   experience_skill_foraging?: number
@@ -20,6 +21,8 @@ export default interface SkyBlockProfile {
   experience_skill_runecrafting?: number
 
   slayer_bosses?: SlayerBosses
+
+  leveling?: Leveling
 
   dungeons?: DungeonGroups
 

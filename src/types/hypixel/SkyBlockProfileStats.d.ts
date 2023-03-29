@@ -3,10 +3,8 @@ import { PetItem } from './PetItems'
 export default interface SkyBlockProfileStats {
   id: string
   name: string
-  last_save_at: {
-    time: number
-    date: Date
-  }
+  selected: boolean
+  level: number
   weight: number
   weight_overflow: number
   fairy_souls: number
